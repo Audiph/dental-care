@@ -9,3 +9,16 @@ body,
   font-family: 'Inter', sans-serif;
   background-color: #1f2026;
 }
+
+.nav-link {
+  color: #6b6d74;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #d0fcf4;
+}
+
+.active {
+  color: #d1d3da;
+}
