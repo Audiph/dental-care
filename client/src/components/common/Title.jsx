@@ -1,5 +1,5 @@
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
-import { Typography, useTheme } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Fragment } from 'react';
 
 const Title = ({ styleIcon, styleName, name }) => {

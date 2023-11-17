@@ -21,8 +21,6 @@ const Navbar = () => {
 
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
-  console.log(navLinks);
-
   return (
     <FlexBetween
       mb="0.25rem"
