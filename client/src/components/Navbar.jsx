@@ -1,13 +1,27 @@
-import { Button, Typography, useMediaQuery, useTheme } from '@mui/material';
-import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
+import {
+  Button,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink } from 'react-router-dom';
 import FlexBetween from './common/FlexBetween';
+import { Fragment, useState } from 'react';
+import Sidebar from './Sidebar';
+import { navLinks } from '../utils/constants';
+import Title from './common/Title';
 
 const Navbar = () => {
   const user = false;
   const { palette } = useTheme();
   const isBelowSmallScreen = useMediaQuery('(max-width: 992px)');
+
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+
+  console.log(navLinks);
 
   return (
     <FlexBetween
@@ -22,25 +36,38 @@ const Navbar = () => {
       }}
     >
       {/* LEFT SIDE */}
+      {isBelowSmallScreen && (
+        <Fragment>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={() => setIsSideBarOpen(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Sidebar
+            isSideBarOpen={isSideBarOpen}
+            setIsSideBarOpen={setIsSideBarOpen}
+          />
+        </Fragment>
+      )}
       <NavLink to="/" style={{ textDecoration: 'none' }}>
         <FlexBetween gap="0.75rem">
-          <HealthAndSafetyIcon sx={{ fontSize: '28px' }} />
-          <Typography variant="h4" fontSize="16px">
-            Dental Care
-          </Typography>
+          <Title
+            styleIcon={{ fontSize: '28px', color: `${palette.grey[300]}` }}
+            name="Dental Care"
+          />
         </FlexBetween>
       </NavLink>
       {/* MIDDLE SIDE */}
       <FlexBetween gap="2rem" sx={isBelowSmallScreen && { display: 'none' }}>
-        <NavLink to="/" className="nav-link">
-          Home
-        </NavLink>
-        <NavLink to="/appointments" className="nav-link">
-          Appointments
-        </NavLink>
-        <NavLink to="/apply-doctor" className="nav-link">
-          Apply as Doctor
-        </NavLink>
+        {navLinks.map(({ path, name }) => {
+          return (
+            <NavLink to={path} className="nav-link">
+              {name}
+            </NavLink>
+          );
+        })}
       </FlexBetween>
       {/* RIGHT SIDE */}
       <FlexBetween gap="0.5rem">
