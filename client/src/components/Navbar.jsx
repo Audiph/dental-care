@@ -1,10 +1,13 @@
-import { Button, Typography, useTheme } from '@mui/material';
+import { Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import { NavLink } from 'react-router-dom';
 import FlexBetween from './common/FlexBetween';
 
 const Navbar = () => {
+  const user = false;
   const { palette } = useTheme();
+  const isBelowSmallScreen = useMediaQuery('(max-width: 992px)');
 
   return (
     <FlexBetween
@@ -19,27 +22,36 @@ const Navbar = () => {
       }}
     >
       {/* LEFT SIDE */}
-      <FlexBetween gap="0.75rem">
-        <HealthAndSafetyIcon sx={{ fontSize: '28px' }} />
-        <Typography variant="h4" fontSize="16px">
-          Dental Care
-        </Typography>
-      </FlexBetween>
+      <NavLink to="/" style={{ textDecoration: 'none' }}>
+        <FlexBetween gap="0.75rem">
+          <HealthAndSafetyIcon sx={{ fontSize: '28px' }} />
+          <Typography variant="h4" fontSize="16px">
+            Dental Care
+          </Typography>
+        </FlexBetween>
+      </NavLink>
       {/* MIDDLE SIDE */}
-      <FlexBetween gap="2rem">
+      <FlexBetween gap="2rem" sx={isBelowSmallScreen && { display: 'none' }}>
         <NavLink to="/" className="nav-link">
           Home
         </NavLink>
-        <NavLink to="/predictions" className="nav-link">
-          predictions
+        <NavLink to="/appointments" className="nav-link">
+          Appointments
+        </NavLink>
+        <NavLink to="/apply-doctor" className="nav-link">
+          Apply as Doctor
         </NavLink>
       </FlexBetween>
       {/* RIGHT SIDE */}
-      <FlexBetween gap="2rem">
+      <FlexBetween gap="0.5rem">
         <NavLink to="/" className="nav-link">
-          dashboard
+          {user && (
+            <NotificationsIcon
+              sx={{ fontSize: '1.5rem', paddingTop: '0.25rem' }}
+            />
+          )}
         </NavLink>
-        <Button>Login</Button>
+        <Button>{user ? 'Jeff' : 'LOGIN'}</Button>
       </FlexBetween>
     </FlexBetween>
   );
