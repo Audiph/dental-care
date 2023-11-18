@@ -7,9 +7,12 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import dentalImg from '../assets/product-hero.jpg';
+import { useDispatch } from 'react-redux';
+import { showRegister } from '../redux/userSlice';
+import { showModal } from '../redux/alertsSlice';
 
 const ProductHero = () => {
-  const isBelowSmallScreen = useMediaQuery('(max-width: 992px)');
+  const dispatch = useDispatch();
 
   return (
     <Card sx={{ position: 'relative' }}>
@@ -44,7 +47,15 @@ const ProductHero = () => {
         <Typography variant="h5" fontSize={20} mb="2rem">
           Enjoy our services as you start your dental journey.
         </Typography>
-        <Button variant="contained">Register</Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            dispatch(showRegister());
+            dispatch(showModal());
+          }}
+        >
+          Register
+        </Button>
       </CardContent>
     </Card>
   );

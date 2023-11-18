@@ -18,10 +18,11 @@ import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../utils/constants';
 import { showLoading, hideLoading, hideModal } from '../redux/alertsSlice';
 import toast from 'react-hot-toast';
+import { toggleLogin } from '../redux/userSlice';
 
 const AuthModal = () => {
   const { loading, modal } = useSelector((state) => state.alerts);
-  const [isLogin, setIsLogin] = useState(true);
+  const { login } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -32,7 +33,7 @@ const AuthModal = () => {
       const formData = new FormData(e.currentTarget);
       const user = Object.fromEntries(formData);
 
-      if (isLogin) {
+      if (login) {
         const res = await axios
           .post(`${BASE_URL}/api/user/login`, user)
           .then((res) => res)
@@ -66,7 +67,6 @@ const AuthModal = () => {
       toast.success(res.data.message);
       dispatch(hideLoading());
       dispatch(hideModal());
-      setIsLogin(true);
     } catch (error) {
       toast.error('Something went wrong!');
       console.error(error);
@@ -95,10 +95,10 @@ const AuthModal = () => {
         }}
       >
         <Typography component="h1" variant="h1">
-          {isLogin ? 'Login' : 'Sign Up'}
+          {login ? 'Login' : 'Sign Up'}
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          {isLogin ? (
+          {login ? (
             // LOGIN COMPONENT
             <Fragment>
               <TextField
@@ -185,9 +185,9 @@ const AuthModal = () => {
               <Button
                 variant="body2"
                 type="reset"
-                onClick={() => setIsLogin(!isLogin)}
+                onClick={() => dispatch(toggleLogin(!login))}
               >
-                {isLogin
+                {login
                   ? "Don't have an account? Sign Up"
                   : 'Already have an account? Login'}
               </Button>

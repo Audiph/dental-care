@@ -15,11 +15,12 @@ import { navLinks } from '../utils/constants';
 import Title from './common/Title';
 import AuthModal from './AuthModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { showModal } from '../redux/alertsSlice';
+import { showModal, showSideNav } from '../redux/alertsSlice';
+import { toggleLogin } from '../redux/userSlice';
 
 const Navbar = () => {
   const user = false;
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const { login } = useSelector((state) => state.user);
   const { palette } = useTheme();
   const isBelowSmallScreen = useMediaQuery('(max-width: 992px)');
   const dispatch = useDispatch();
@@ -44,14 +45,11 @@ const Navbar = () => {
             <IconButton
               color="inherit"
               aria-label="open drawer"
-              onClick={() => setIsSideBarOpen(true)}
+              onClick={() => dispatch(showSideNav())}
             >
               <MenuIcon />
             </IconButton>
-            <Sidebar
-              isSideBarOpen={isSideBarOpen}
-              setIsSideBarOpen={setIsSideBarOpen}
-            />
+            <Sidebar />
           </Fragment>
         )}
         <NavLink to="/" style={{ textDecoration: 'none' }}>
@@ -83,7 +81,14 @@ const Navbar = () => {
               />
             )}
           </NavLink>
-          <Button onClick={() => dispatch(showModal())}>
+          <Button
+            onClick={() => {
+              login
+                ? dispatch(toggleLogin(login))
+                : dispatch(toggleLogin(!login));
+              dispatch(showModal());
+            }}
+          >
             {user ? 'Jeff' : 'LOGIN'}
           </Button>
         </FlexBetween>
