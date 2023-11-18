@@ -5,6 +5,7 @@ import { themeSettings } from './theme';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Error, HomeLayout, Landing, User } from './pages';
 import { Toaster } from 'react-hot-toast';
+import { ProtectedRoute } from './components';
 
 const router = createBrowserRouter([
   {
@@ -18,15 +19,27 @@ const router = createBrowserRouter([
       },
       {
         path: '/appointments',
-        element: <div>Appointments...</div>,
+        element: (
+          <ProtectedRoute>
+            <div>Appointments...</div>
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/apply-dentist',
-        element: <div>Apply-dentist...</div>,
+        element: (
+          <ProtectedRoute>
+            <div>Apply-dentist...</div>
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/profile/:id',
-        element: <User />,
+        element: (
+          <ProtectedRoute>
+            <User />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
