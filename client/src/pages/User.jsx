@@ -1,8 +1,12 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { BASE_URL } from '../utils/constants';
+import { Loading } from '../components';
+import { useSelector } from 'react-redux';
 
 const User = () => {
+  const { loading } = useSelector((state) => state.alerts);
+
   const fetchData = async () => {
     try {
       const res = await axios
@@ -24,7 +28,12 @@ const User = () => {
     fetchData();
   }, []);
 
-  return <div>User</div>;
+  return (
+    <div>
+      {loading && <Loading />}
+      <h1>User</h1>
+    </div>
+  );
 };
 
 export default User;

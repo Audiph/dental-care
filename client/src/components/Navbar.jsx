@@ -19,8 +19,7 @@ import { showModal, showSideNav } from '../redux/alertsSlice';
 import { toggleLogin } from '../redux/userSlice';
 
 const Navbar = () => {
-  const user = false;
-  const { login } = useSelector((state) => state.user);
+  const { login, user } = useSelector((state) => state.user);
   const { palette } = useTheme();
   const isBelowSmallScreen = useMediaQuery('(max-width: 992px)');
   const dispatch = useDispatch();
@@ -81,16 +80,29 @@ const Navbar = () => {
               />
             )}
           </NavLink>
-          <Button
-            onClick={() => {
-              login
-                ? dispatch(toggleLogin(login))
-                : dispatch(toggleLogin(!login));
-              dispatch(showModal());
-            }}
-          >
-            {user ? 'Jeff' : 'LOGIN'}
-          </Button>
+          {user ? (
+            <Button
+              onClick={() => {
+                login
+                  ? dispatch(toggleLogin(login))
+                  : dispatch(toggleLogin(!login));
+                dispatch(showModal());
+              }}
+            >
+              {user?.name}
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                login
+                  ? dispatch(toggleLogin(login))
+                  : dispatch(toggleLogin(!login));
+                dispatch(showModal());
+              }}
+            >
+              LOGIN
+            </Button>
+          )}
         </FlexBetween>
       </FlexBetween>
       <AuthModal />
