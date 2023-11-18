@@ -4,6 +4,7 @@ import { createTheme } from '@mui/material/styles';
 import { themeSettings } from './theme';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Error, HomeLayout, Landing } from './pages';
+import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter([
   {
@@ -33,8 +34,10 @@ function App() {
   const theme = useMemo(() => createTheme(themeSettings), []);
   return (
     <div className="app">
+      <Toaster position="top-center" reverseOrder={false} />
       <ThemeProvider theme={theme}>
         <CssBaseline />
+
         <Box width="100%" height="100%">
           <RouterProvider router={router} />
         </Box>

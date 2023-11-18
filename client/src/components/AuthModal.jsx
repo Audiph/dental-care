@@ -10,20 +10,46 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import axios from 'axios';
 import { Fragment, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../utils/constants';
+import toast from 'react-hot-toast';
 
 const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
   const [isLogin, setIsLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get('name'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const handleSubmit = async (e) => {
+    try {
+      setLoading(true);
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      const newUser = Object.fromEntries(formData);
+      const res = await axios
+        .post(`${BASE_URL}/api/user/register`, newUser)
+        .then((res) => res)
+        .catch((err) => err.response);
+      if (!res.data.success) {
+        toast.error(res.data.message);
+        setLoading(false);
+        return;
+      }
+
+      toast.success(res.data.message);
+      setLoading(false);
+      setIsModalOpen(false);
+      setIsLogin(true);
+      e.currentTarget.reset();
+      navigate('/');
+    } catch (error) {
+      toast.error('Something went wrong!');
+      setLoading(false);
+    }
   };
+
   return (
     <Modal
       open={isModalOpen}
@@ -72,14 +98,15 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
                 autoComplete="current-password"
                 color="info"
               />
-              <Button
+              <LoadingButton
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                loading={loading}
               >
                 Sign In
-              </Button>
+              </LoadingButton>
             </Fragment>
           ) : (
             <Fragment>
@@ -116,19 +143,24 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
                 autoComplete="current-password"
                 color="info"
               />
-              <Button
+              <LoadingButton
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                loading={loading}
               >
                 Sign Up
-              </Button>
+              </LoadingButton>
             </Fragment>
           )}
           <Grid container>
             <Grid item>
-              <Button onClick={() => setIsLogin(!isLogin)} variant="body2">
+              <Button
+                variant="body2"
+                type="reset"
+                onClick={() => setIsLogin(!isLogin)}
+              >
                 {isLogin
                   ? "Don't have an account? Sign Up"
                   : 'Already have an account? Login'}
