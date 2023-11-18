@@ -2,6 +2,7 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
+import authMiddleware from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
@@ -60,11 +61,36 @@ router.post('/login', async (req, res) => {
       expiresIn: '1d',
     });
 
-    res.status(200).send({ message: 'Login Successful', success: true, token });
+    res.status(200).send({
+      message: 'Login Successful',
+      success: true,
+      token,
+      id: user._id,
+    });
   } catch (error) {
     res
       .status(500)
       .send({ message: 'Error logging in user', error, success: false });
+  }
+});
+
+router.post('/get-user-info-by-id', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.body.userId });
+
+    if (!user)
+      return res.status(404).send({
+        message: `User with email: ${user.email}, does not exist.`,
+        success: false,
+      });
+
+    res
+      .status(200)
+      .send({ success: true, data: { name: user.name, email: user.email } });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: 'Error getting user info', error, success: false });
   }
 });
 
