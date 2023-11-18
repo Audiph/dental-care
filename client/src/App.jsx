@@ -3,7 +3,7 @@ import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { themeSettings } from './theme';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { Error, HomeLayout } from './pages';
+import { Error, HomeLayout, Landing } from './pages';
 
 const router = createBrowserRouter([
   {
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <div>Landing...</div>,
+        element: <Landing />,
       },
       {
         path: '/appointments',

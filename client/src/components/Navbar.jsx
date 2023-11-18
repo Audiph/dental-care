@@ -35,6 +35,7 @@ const Navbar = () => {
         sx={{
           backdropFilter: 'saturate(180%) blur(10px)',
         }}
+        zIndex={1}
       >
         {/* LEFT SIDE */}
         {isBelowSmallScreen && (
