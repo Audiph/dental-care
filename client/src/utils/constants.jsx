@@ -35,3 +35,5 @@ export const services = [
     icon: <ApprovalIcon fontSize="1px" />,
   },
 ];
+
+export const BASE_URL = import.meta.env.VITE_BASE_URL;
