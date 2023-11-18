@@ -28,6 +28,7 @@ const ProtectedRoute = (props) => {
         .catch((err) => err.response);
 
       if (!res.data.success) {
+        localStorage.clear();
         dispatch(hideLoading());
         navigate('/');
         return;
@@ -39,6 +40,7 @@ const ProtectedRoute = (props) => {
       dispatch(setUser({ name, email }));
     } catch (error) {
       console.error(error);
+      localStorage.clear();
       dispatch(hideLoading());
       navigate('/');
     }
