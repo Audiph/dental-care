@@ -17,7 +17,6 @@ const User = () => {
         )
         .then((res) => res)
         .catch((err) => err.response);
-      console.log('🚀 ~ file: User.jsx:16 ~ fetchData ~ res:', res);
     } catch (error) {}
   };
 
