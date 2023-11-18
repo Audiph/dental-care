@@ -21,9 +21,9 @@ const router = createBrowserRouter([
         element: <div>Appointments...</div>,
       },
       {
-        path: '/apply-doctor',
+        path: '/apply-dentist',
         index: true,
-        element: <div>Apply-doctor...</div>,
+        element: <div>Apply-dentist...</div>,
       },
     ],
   },

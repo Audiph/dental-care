@@ -11,7 +11,7 @@ export const navLinks = [
   },
   {
     id: 3,
-    path: '/apply-doctor',
-    name: 'Apply as Doctor',
+    path: '/apply-dentist',
+    name: 'Apply as Dentist',
   },
 ];

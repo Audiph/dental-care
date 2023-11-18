@@ -10,12 +10,16 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { Fragment, useState } from 'react';
 
 const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
+  const [isLogin, setIsLogin] = useState(true);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
+      name: data.get('name'),
       email: data.get('email'),
       password: data.get('password'),
     });
@@ -41,44 +45,94 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
         }}
       >
         <Typography component="h1" variant="h1">
-          Sign in
+          {isLogin ? 'Login' : 'Sign Up'}
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            color="info"
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            color="info"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
+          {isLogin ? (
+            <Fragment>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                color="info"
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                color="info"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="Name"
+                name="name"
+                autoComplete="name"
+                autoFocus
+                color="info"
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                color="info"
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                color="info"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
+            </Fragment>
+          )}
           <Grid container>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <Button onClick={() => setIsLogin(!isLogin)} variant="body2">
+                {isLogin
+                  ? "Don't have an account? Sign Up"
+                  : 'Already have an account? Login'}
+              </Button>
             </Grid>
           </Grid>
         </Box>
