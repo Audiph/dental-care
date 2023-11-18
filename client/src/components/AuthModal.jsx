@@ -16,11 +16,11 @@ import { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../utils/constants';
-import { showLoading, hideLoading } from '../redux/alertsSlice';
+import { showLoading, hideLoading, hideModal } from '../redux/alertsSlice';
 import toast from 'react-hot-toast';
 
-const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
-  const { loading } = useSelector((state) => state.alerts);
+const AuthModal = () => {
+  const { loading, modal } = useSelector((state) => state.alerts);
   const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -48,7 +48,7 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
 
         localStorage.setItem('token', token);
         dispatch(hideLoading());
-        setIsModalOpen(false);
+        dispatch(hideModal());
         navigate(`/profile/${id}`);
         return;
       }
@@ -65,7 +65,7 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
 
       toast.success(res.data.message);
       dispatch(hideLoading());
-      setIsModalOpen(false);
+      dispatch(hideModal());
       setIsLogin(true);
     } catch (error) {
       toast.error('Something went wrong!');
@@ -76,8 +76,8 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
 
   return (
     <Modal
-      open={isModalOpen}
-      onClose={() => setIsModalOpen(false)}
+      open={modal}
+      onClose={() => dispatch(hideModal())}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >

@@ -14,14 +14,15 @@ import Sidebar from './Sidebar';
 import { navLinks } from '../utils/constants';
 import Title from './common/Title';
 import AuthModal from './AuthModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { showModal } from '../redux/alertsSlice';
 
 const Navbar = () => {
   const user = false;
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const { palette } = useTheme();
   const isBelowSmallScreen = useMediaQuery('(max-width: 992px)');
-
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <Fragment>
@@ -82,12 +83,12 @@ const Navbar = () => {
               />
             )}
           </NavLink>
-          <Button onClick={() => setIsModalOpen(true)}>
+          <Button onClick={() => dispatch(showModal())}>
             {user ? 'Jeff' : 'LOGIN'}
           </Button>
         </FlexBetween>
       </FlexBetween>
-      <AuthModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <AuthModal />
     </Fragment>
   );
 };
