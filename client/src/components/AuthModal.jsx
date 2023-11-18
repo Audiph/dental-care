@@ -13,46 +13,45 @@ import {
 import { LoadingButton } from '@mui/lab';
 import axios from 'axios';
 import { Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../utils/constants';
+import { showLoading, hideLoading } from '../redux/alertsSlice';
 import toast from 'react-hot-toast';
 
 const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
+  const { loading } = useSelector((state) => state.alerts);
   const [isLogin, setIsLogin] = useState(true);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     try {
-      setLoading(true);
+      dispatch(showLoading());
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const user = Object.fromEntries(formData);
 
       if (isLogin) {
-        console.log('Login component');
-        console.log(user);
         const res = await axios
           .post(`${BASE_URL}/api/user/login`, user)
           .then((res) => res)
           .catch((err) => err.response);
-        console.log('🚀 ~ file: AuthModal.jsx:39 ~ handleSubmit ~ res:', res);
 
         if (!res.data.success) {
           toast.error(res.data.message);
-          setLoading(false);
+          dispatch(hideLoading());
           return;
         }
 
         const { token, id } = res.data;
 
         localStorage.setItem('token', token);
-        setLoading(false);
+        dispatch(hideLoading());
         setIsModalOpen(false);
         navigate(`/profile/${id}`);
         return;
       }
-      console.log('Register component');
       const res = await axios
         .post(`${BASE_URL}/api/user/register`, user)
         .then((res) => res)
@@ -60,18 +59,18 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
 
       if (!res.data.success) {
         toast.error(res.data.message);
-        setLoading(false);
+        dispatch(hideLoading());
         return;
       }
 
       toast.success(res.data.message);
-      setLoading(false);
+      dispatch(hideLoading());
       setIsModalOpen(false);
       setIsLogin(true);
     } catch (error) {
       toast.error('Something went wrong!');
       console.error(error);
-      setLoading(false);
+      dispatch(hideLoading());
     }
   };
 
