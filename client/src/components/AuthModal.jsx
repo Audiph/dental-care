@@ -28,10 +28,33 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const newUser = Object.fromEntries(formData);
+
+      if (isLogin) {
+        console.log('Login component');
+        console.log(newUser);
+        const res = await axios
+          .post(`${BASE_URL}/api/user/login`, newUser)
+          .then((res) => res)
+          .catch((err) => err.response);
+
+        if (!res.data.success) {
+          toast.error(res.data.message);
+          setLoading(false);
+          return;
+        }
+
+        localStorage.setItem('token', res.data.token);
+        setLoading(false);
+        setIsModalOpen(false);
+        navigate('/appointments');
+        return;
+      }
+      console.log('Register component');
       const res = await axios
         .post(`${BASE_URL}/api/user/register`, newUser)
         .then((res) => res)
         .catch((err) => err.response);
+
       if (!res.data.success) {
         toast.error(res.data.message);
         setLoading(false);
@@ -42,10 +65,9 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
       setLoading(false);
       setIsModalOpen(false);
       setIsLogin(true);
-      e.currentTarget.reset();
-      navigate('/');
     } catch (error) {
       toast.error('Something went wrong!');
+      console.error(error);
       setLoading(false);
     }
   };
@@ -75,6 +97,7 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           {isLogin ? (
+            // LOGIN COMPONENT
             <Fragment>
               <TextField
                 margin="normal"
@@ -109,6 +132,7 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
               </LoadingButton>
             </Fragment>
           ) : (
+            // REGISTER COMPONENT
             <Fragment>
               <TextField
                 margin="normal"
