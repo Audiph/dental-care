@@ -12,8 +12,6 @@ import {
 } from '@mui/material';
 
 const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
-  const { palette } = useTheme();
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -36,7 +34,7 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: 400,
-          bgcolor: palette.grey[800],
+          bgcolor: '#fff',
           border: '2px solid #000',
           boxShadow: 24,
           p: 4,
@@ -55,7 +53,7 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
             name="email"
             autoComplete="email"
             autoFocus
-            color="background"
+            color="info"
           />
           <TextField
             margin="normal"
@@ -66,10 +64,7 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
             type="password"
             id="password"
             autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            color="info"
           />
           <Button
             type="submit"
@@ -80,11 +75,6 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
               <Link href="#" variant="body2">
                 {"Don't have an account? Sign Up"}
