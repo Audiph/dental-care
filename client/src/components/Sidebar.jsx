@@ -29,13 +29,14 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
         />
       </Box>
       <Divider sx={{ margin: '1rem 0' }} />
-      {navLinks.map(({ path, name }) => {
+      {navLinks.map(({ id, path, name }) => {
         return (
           <NavLink
             to={path}
             className="nav-link"
             style={{ marginBottom: '1rem' }}
             onClick={() => setIsSideBarOpen(false)}
+            key={id}
           >
             {name}
           </NavLink>

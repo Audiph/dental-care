@@ -63,9 +63,9 @@ const Navbar = () => {
 
         {/* MIDDLE SIDE */}
         <FlexBetween gap="2rem" sx={isBelowSmallScreen && { display: 'none' }}>
-          {navLinks.map(({ path, name }) => {
+          {navLinks.map(({ id, path, name }) => {
             return (
-              <NavLink to={path} className="nav-link">
+              <NavLink to={path} className="nav-link" key={id}>
                 {name}
               </NavLink>
             );
