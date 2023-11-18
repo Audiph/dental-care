@@ -84,9 +84,7 @@ router.post('/get-user-info-by-id', authMiddleware, async (req, res) => {
         success: false,
       });
 
-    res
-      .status(200)
-      .send({ success: true, data: { name: user.name, email: user.email } });
+    res.status(200).send({ success: true, name: user.name, email: user.email });
   } catch (error) {
     res
       .status(500)
