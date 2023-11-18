@@ -27,15 +27,16 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
       setLoading(true);
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
-      const newUser = Object.fromEntries(formData);
+      const user = Object.fromEntries(formData);
 
       if (isLogin) {
         console.log('Login component');
-        console.log(newUser);
+        console.log(user);
         const res = await axios
-          .post(`${BASE_URL}/api/user/login`, newUser)
+          .post(`${BASE_URL}/api/user/login`, user)
           .then((res) => res)
           .catch((err) => err.response);
+        console.log('🚀 ~ file: AuthModal.jsx:39 ~ handleSubmit ~ res:', res);
 
         if (!res.data.success) {
           toast.error(res.data.message);
@@ -43,15 +44,17 @@ const AuthModal = ({ isModalOpen, setIsModalOpen }) => {
           return;
         }
 
-        localStorage.setItem('token', res.data.token);
+        const { token, id } = res.data;
+
+        localStorage.setItem('token', token);
         setLoading(false);
         setIsModalOpen(false);
-        navigate('/appointments');
+        navigate(`/profile/${id}`);
         return;
       }
       console.log('Register component');
       const res = await axios
-        .post(`${BASE_URL}/api/user/register`, newUser)
+        .post(`${BASE_URL}/api/user/register`, user)
         .then((res) => res)
         .catch((err) => err.response);
 
