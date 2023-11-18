@@ -3,7 +3,7 @@ import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { themeSettings } from './theme';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { Error, HomeLayout, Landing } from './pages';
+import { Error, HomeLayout, Landing, User } from './pages';
 import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter([
@@ -18,13 +18,15 @@ const router = createBrowserRouter([
       },
       {
         path: '/appointments',
-        index: true,
         element: <div>Appointments...</div>,
       },
       {
         path: '/apply-dentist',
-        index: true,
         element: <div>Apply-dentist...</div>,
+      },
+      {
+        path: '/profile/:id',
+        element: <User />,
       },
     ],
   },
