@@ -1,7 +1,13 @@
-import { ProductHero } from '../components';
+import { Fragment } from 'react';
+import { ProductHero, Services } from '../components';
 
 const Landing = () => {
-  return <ProductHero />;
+  return (
+    <Fragment>
+      <ProductHero />
+      <Services />
+    </Fragment>
+  );
 };
 
 export default Landing;

@@ -18,15 +18,10 @@ const ProductHero = () => {
         image={dentalImg}
         title="dentist"
         alt="dentist"
-        sx={
-          isBelowSmallScreen
-            ? {
-                minWidth: '75vh',
-              }
-            : {
-                minWidth: '100vh',
-              }
-        }
+        sx={{
+          maxHeight: '50vh',
+          minHeight: '50vh',
+        }}
       />
       <CardContent
         sx={{
