@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import { services } from '../../utils/constants';
 import { Link } from 'react-router-dom';
+import PageHeader from '../common/PageHeader';
 
 const Services = () => {
   const isBelowSmallScreen = useMediaQuery('(max-width: 992px)');
@@ -14,14 +15,7 @@ const Services = () => {
 
   return (
     <Container>
-      <Typography
-        textAlign="center"
-        mt="5rem"
-        variant="h1"
-        color={palette.tertiary[500]}
-      >
-        OUR SERVICES
-      </Typography>
+      <PageHeader title="OUR SERVICES" color={palette.tertiary[500]} />
       <Box
         p="1rem"
         display="grid"
