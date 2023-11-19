@@ -3,7 +3,14 @@ import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { themeSettings } from './theme';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { ApplyDentist, Error, HomeLayout, Landing, User } from './pages';
+import {
+  ApplyDentist,
+  Error,
+  HomeLayout,
+  Landing,
+  Notifications,
+  User,
+} from './pages';
 import { Toaster } from 'react-hot-toast';
 import { ProtectedRoute } from './components';
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -24,6 +31,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <div>Appointments...</div>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/notifications',
+        element: (
+          <ProtectedRoute>
+            <Notifications />
           </ProtectedRoute>
         ),
       },

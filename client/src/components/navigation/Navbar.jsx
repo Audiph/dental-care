@@ -79,7 +79,7 @@ const Navbar = () => {
 
         {/* RIGHT SIDE */}
         <FlexBetween gap="2rem">
-          <NavLink to="/" className="nav-link">
+          <Button onClick={() => navigate('/notifications')}>
             {user && (
               <Badge
                 badgeContent={user?.unseenNotifications.length}
@@ -90,7 +90,7 @@ const Navbar = () => {
                 />
               </Badge>
             )}
-          </NavLink>
+          </Button>
           {user ? (
             <PopupState variant="popover" popupId="demo-popup-menu">
               {(popupState) => (
