@@ -151,4 +151,88 @@ router.post('/apply-dentist-account', authMiddleware, async (req, res) => {
   }
 });
 
+// ALL NOTIFICATIONS
+router.post(
+  '/mark-all-notifications-as-seen',
+  authMiddleware,
+  async (req, res) => {
+    try {
+      const user = await User.findOne({ _id: req.body.userId });
+      const currentUnseenNotifications = user.unseenNotifications;
+      const currentSeenNotifications = user.seenNotifications;
+      currentSeenNotifications.push(...currentUnseenNotifications);
+      user.seenNotifications = currentSeenNotifications;
+      user.unseenNotifications = [];
+      const updatedUser = await user.save();
+      updatedUser.password = undefined;
+
+      const {
+        id,
+        name,
+        email,
+        isDentist,
+        isAdmin,
+        seenNotifications,
+        unseenNotifications,
+      } = updatedUser;
+
+      res.status(200).send({
+        success: true,
+        message: 'All notifications marked as seen',
+        id,
+        name,
+        email,
+        isDentist,
+        isAdmin,
+        seenNotifications,
+        unseenNotifications,
+      });
+    } catch (error) {
+      res.status(500).send({
+        message: 'Error clearing unseen notifications',
+        error,
+        success: false,
+      });
+    }
+  }
+);
+
+router.post('/delete-all-notifications', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.body.userId });
+    user.seenNotifications = [];
+    user.unseenNotifications = [];
+    const updatedUser = await user.save();
+    updatedUser.password = undefined;
+
+    const {
+      id,
+      name,
+      email,
+      isDentist,
+      isAdmin,
+      seenNotifications,
+      unseenNotifications,
+    } = updatedUser;
+
+    res.status(200).send({
+      success: true,
+      message: 'All unseen notifications cleared',
+      id,
+      name,
+      email,
+      isDentist,
+      isAdmin,
+      seenNotifications,
+      unseenNotifications,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: 'Error clearing unseen notifications',
+      error,
+      success: false,
+    });
+  }
+});
+
 export default router;
