@@ -20,7 +20,6 @@ import { setUser } from '../redux/userSlice';
 
 const Notifications = () => {
   const { user } = useSelector((state) => state.user);
-  console.log('🚀 ~ file: Notifications.jsx:23 ~ Notifications ~ user:', user);
   const { palette } = useTheme();
   const dispatch = useDispatch();
 
