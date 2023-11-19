@@ -5,6 +5,7 @@ import {
   Divider,
   Grid,
   TextField,
+  useMediaQuery,
   useTheme,
 } from '@mui/material';
 import React from 'react';
@@ -14,8 +15,9 @@ import { useSelector } from 'react-redux';
 import { TimeField } from '@mui/x-date-pickers';
 
 const ApplyDentist = () => {
-  const { palette } = useTheme();
   const { loading } = useSelector((state) => state.alerts);
+  const isBelowSmallScreen = useMediaQuery('(max-width: 675px)');
+  const { palette } = useTheme();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,6 +53,7 @@ const ApplyDentist = () => {
           gridTemplateColumns="1fr 1fr"
           columnGap="2rem"
           alignItems="space-between"
+          sx={isBelowSmallScreen && { gridTemplateColumns: '1fr' }}
         >
           <TextField
             margin="normal"
@@ -105,6 +108,7 @@ const ApplyDentist = () => {
           gridTemplateColumns="1fr 1fr"
           columnGap="2rem"
           alignItems="space-between"
+          sx={isBelowSmallScreen && { gridTemplateColumns: '1fr' }}
         >
           <TextField
             margin="normal"
@@ -139,7 +143,7 @@ const ApplyDentist = () => {
           />
         </Box>
         <Divider sx={{ my: '1rem' }} />
-        <Grid container spacing={2}>
+        <Grid container spacing={2} columns={isBelowSmallScreen ? 1 : 0}>
           <Grid item xs={6}>
             <LoadingButton
               type="submit"
