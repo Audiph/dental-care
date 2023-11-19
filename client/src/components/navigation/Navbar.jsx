@@ -5,6 +5,7 @@ import {
   useTheme,
   Menu,
   MenuItem,
+  Badge,
 } from '@mui/material';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -77,12 +78,14 @@ const Navbar = () => {
         </FlexBetween>
 
         {/* RIGHT SIDE */}
-        <FlexBetween gap="0.5rem">
+        <FlexBetween gap="2rem">
           <NavLink to="/" className="nav-link">
             {user && (
-              <NotificationsIcon
-                sx={{ fontSize: '1.5rem', paddingTop: '0.25rem' }}
-              />
+              <Badge badgeContent={4} color="secondary">
+                <NotificationsIcon
+                  sx={{ fontSize: '2rem', paddingTop: '0.25rem' }}
+                />
+              </Badge>
             )}
           </NavLink>
           {user ? (
