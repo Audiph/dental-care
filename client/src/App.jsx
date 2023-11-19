@@ -3,9 +3,11 @@ import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { themeSettings } from './theme';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { Error, HomeLayout, Landing, User } from './pages';
+import { ApplyDentist, Error, HomeLayout, Landing, User } from './pages';
 import { Toaster } from 'react-hot-toast';
 import { ProtectedRoute } from './components';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 const router = createBrowserRouter([
   {
@@ -29,7 +31,7 @@ const router = createBrowserRouter([
         path: '/apply-dentist',
         element: (
           <ProtectedRoute>
-            <div>Apply-dentist...</div>
+            <ApplyDentist />
           </ProtectedRoute>
         ),
       },
@@ -48,16 +50,18 @@ const router = createBrowserRouter([
 function App() {
   const theme = useMemo(() => createTheme(themeSettings), []);
   return (
-    <div className="app">
-      <Toaster position="top-center" reverseOrder={false} />
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    <LocalizationProvider dateAdapter={AdapterMoment}>
+      <div className="app">
+        <Toaster position="top-center" reverseOrder={false} />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
 
-        <Box width="100%" height="100%">
-          <RouterProvider router={router} />
-        </Box>
-      </ThemeProvider>
-    </div>
+          <Box width="100%" height="100%">
+            <RouterProvider router={router} />
+          </Box>
+        </ThemeProvider>
+      </div>
+    </LocalizationProvider>
   );
 }
 
