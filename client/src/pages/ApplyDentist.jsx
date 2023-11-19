@@ -11,19 +11,55 @@ import {
 import React from 'react';
 import { PageHeader, FormBox } from '../components';
 import { LoadingButton } from '@mui/lab';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TimeField } from '@mui/x-date-pickers';
+import { hideLoading, showLoading } from '../redux/alertsSlice';
+import axios from 'axios';
+import { BASE_URL } from '../utils/constants';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const ApplyDentist = () => {
   const { loading } = useSelector((state) => state.alerts);
+  const { user } = useSelector((state) => state.user);
   const isBelowSmallScreen = useMediaQuery('(max-width: 675px)');
   const { palette } = useTheme();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const user = Object.fromEntries(formData);
-    console.log('🚀 ~ file: ApplyDentist.jsx:15 ~ handleSubmit ~ user:', user);
+    const newDentist = Object.fromEntries(formData);
+
+    try {
+      dispatch(showLoading());
+      const res = await axios
+        .post(
+          `${BASE_URL}/api/user/apply-dentist-account`,
+          {
+            ...newDentist,
+            userId: user.id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        )
+        .then((res) => res)
+        .catch((err) => err.response);
+
+      if (!res.data.success) {
+        toast.error(res.data.message);
+        dispatch(hideLoading());
+        return;
+      }
+
+      dispatch(hideLoading());
+      toast.success(res.data.message);
+      navigate(`/profile/${user.id}`);
+    } catch (error) {}
   };
 
   return (
@@ -50,10 +86,13 @@ const ApplyDentist = () => {
         </Divider>
         <Box
           display="grid"
-          gridTemplateColumns="1fr 1fr"
           columnGap="2rem"
           alignItems="space-between"
-          sx={isBelowSmallScreen && { gridTemplateColumns: '1fr' }}
+          sx={
+            isBelowSmallScreen
+              ? { gridTemplateColumns: '1fr' }
+              : { gridTemplateColumns: '1fr 1fr' }
+          }
         >
           <TextField
             margin="normal"
@@ -106,10 +145,13 @@ const ApplyDentist = () => {
         </Divider>
         <Box
           display="grid"
-          gridTemplateColumns="1fr 1fr"
           columnGap="2rem"
           alignItems="space-between"
-          sx={isBelowSmallScreen && { gridTemplateColumns: '1fr' }}
+          sx={
+            isBelowSmallScreen
+              ? { gridTemplateColumns: '1fr' }
+              : { gridTemplateColumns: '1fr 1fr' }
+          }
         >
           <TextField
             margin="normal"
@@ -123,6 +165,7 @@ const ApplyDentist = () => {
             color="info"
           />
           <TextField
+            type="number"
             margin="normal"
             required
             fullWidth

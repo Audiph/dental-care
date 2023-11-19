@@ -22,7 +22,6 @@ import { appLinks } from '@/utils/util';
 
 const Navbar = () => {
   const { login, user } = useSelector((state) => state.user);
-  console.log('🚀 ~ file: Navbar.jsx:26 ~ Navbar ~ user:', user);
   const { palette } = useTheme();
   const isBelowSmallScreen = useMediaQuery('(max-width: 992px)');
   const dispatch = useDispatch();
