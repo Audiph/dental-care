@@ -61,7 +61,7 @@ router.post('/login', async (req, res) => {
       expiresIn: '1d',
     });
 
-    const { isAdmin, isDoctor } = user;
+    const { isAdmin, isDentist } = user;
 
     res.status(200).send({
       message: 'Login Successful',
@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
       token,
       id: user._id,
       isAdmin,
-      isDoctor,
+      isDentist,
     });
   } catch (error) {
     res
@@ -89,9 +89,10 @@ router.post('/get-user-info-by-id', authMiddleware, async (req, res) => {
       });
 
     const {
+      id,
       name,
       email,
-      isDoctor,
+      isDentist,
       isAdmin,
       seenNotifications,
       unseenNotifications,
@@ -99,9 +100,10 @@ router.post('/get-user-info-by-id', authMiddleware, async (req, res) => {
 
     res.status(200).send({
       success: true,
+      id,
       name,
       email,
-      isDoctor,
+      isDentist,
       isAdmin,
       seenNotifications,
       unseenNotifications,

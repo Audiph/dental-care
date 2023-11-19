@@ -15,7 +15,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    isDoctor: {
+    isDentist: {
       type: Boolean,
       default: false,
     },
