@@ -11,12 +11,72 @@ import {
 } from '@mui/material';
 import { Folder, CircleNotifications } from '@mui/icons-material';
 import { FlexBetween, FormBox, PageHeader } from '../components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { hideLoading, showLoading } from '../redux/alertsSlice';
+import { BASE_URL } from '../utils/constants';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { setUser } from '../redux/userSlice';
 
 const Notifications = () => {
   const { user } = useSelector((state) => state.user);
-  console.log('🚀 ~ file: Notifications.jsx:18 ~ Notifications ~ user:', user);
+  console.log('🚀 ~ file: Notifications.jsx:23 ~ Notifications ~ user:', user);
   const { palette } = useTheme();
+  const dispatch = useDispatch();
+
+  const deleteAllNotifications = async () => {
+    try {
+      dispatch(showLoading());
+      const res = await axios
+        .post(
+          `${BASE_URL}/api/user/delete-all-notifications`,
+          {
+            useId: user.id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        )
+        .then((res) => res)
+        .catch((err) => err.response);
+
+      if (!res.data.success) {
+        toast.error(res.data.message);
+        dispatch(hideLoading());
+        return;
+      }
+
+      const {
+        id,
+        name,
+        email,
+        isDentist,
+        isAdmin,
+        seenNotifications,
+        unseenNotifications,
+      } = await res.data;
+
+      dispatch(
+        setUser({
+          id,
+          name,
+          email,
+          isDentist,
+          isAdmin,
+          seenNotifications,
+          unseenNotifications,
+        })
+      );
+      dispatch(hideLoading());
+    } catch (error) {
+      toast.error('Something went wrong!');
+      console.error(error);
+      dispatch(hideLoading());
+    }
+  };
+
   return (
     <Container sx={{ position: 'absolute', minWidth: '100%' }}>
       <PageHeader
@@ -33,12 +93,17 @@ const Notifications = () => {
               </Typography>
             </Box>
           </FlexBetween>
-          <Button variant="contained" color="error" endIcon={<Folder />}>
+          <Button
+            onClick={() => deleteAllNotifications()}
+            variant="contained"
+            color="error"
+            endIcon={<Folder />}
+          >
             Delete All
           </Button>
         </FlexBetween>
         <List dense={true}>
-          {user?.unseenNotifications?.map((item, index) => {
+          {user?.seenNotifications?.map((item, index) => {
             return (
               <ListItem key={index}>
                 <ListItemIcon

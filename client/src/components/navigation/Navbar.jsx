@@ -20,6 +20,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { showModal, showSideNav } from '@/redux/alertsSlice';
 import { logout, toggleLogin } from '@/redux/userSlice';
 import { appLinks } from '@/utils/util';
+import { hideLoading, showLoading } from '../../redux/alertsSlice';
+import { BASE_URL } from '../../utils/constants';
+import toast from 'react-hot-toast';
+import { setUser } from '../../redux/userSlice';
+import axios from 'axios';
 
 const Navbar = () => {
   const { login, user } = useSelector((state) => state.user);
@@ -29,6 +34,60 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const links = appLinks(user);
+
+  const markAsSeenNotifications = async () => {
+    try {
+      dispatch(showLoading());
+      const res = await axios
+        .post(
+          `${BASE_URL}/api/user/mark-all-notifications-as-seen`,
+          {
+            useId: user.id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        )
+        .then((res) => res)
+        .catch((err) => err.response);
+
+      if (!res.data.success) {
+        toast.error(res.data.message);
+        dispatch(hideLoading());
+        return;
+      }
+
+      const {
+        id,
+        name,
+        email,
+        isDentist,
+        isAdmin,
+        seenNotifications,
+        unseenNotifications,
+      } = await res.data;
+
+      dispatch(
+        setUser({
+          id,
+          name,
+          email,
+          isDentist,
+          isAdmin,
+          seenNotifications,
+          unseenNotifications,
+        })
+      );
+      dispatch(hideLoading());
+      navigate('/notifications');
+    } catch (error) {
+      toast.error('Something went wrong!');
+      console.error(error);
+      dispatch(hideLoading());
+    }
+  };
 
   return (
     <Fragment>
@@ -79,7 +138,16 @@ const Navbar = () => {
 
         {/* RIGHT SIDE */}
         <FlexBetween gap="2rem">
-          <Button onClick={() => navigate('/notifications')}>
+          <Button
+            onClick={() => {
+              if (user?.unseenNotifications.length === 0) {
+                navigate('/notifications');
+                return;
+              }
+
+              markAsSeenNotifications();
+            }}
+          >
             {user && (
               <Badge
                 badgeContent={user?.unseenNotifications.length}
