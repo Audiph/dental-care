@@ -1,11 +1,13 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
+import Dentist from '../models/dentistModel.js';
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
 import authMiddleware from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
+// USER AUTHENTICATION
 router.post('/register', async (req, res) => {
   try {
     const { name, email } = req.body;
@@ -112,6 +114,40 @@ router.post('/get-user-info-by-id', authMiddleware, async (req, res) => {
     res
       .status(500)
       .send({ message: 'Error getting user info', error, success: false });
+  }
+});
+
+// DENTIST APPLICATION
+router.post('/apply-dentist-account', authMiddleware, async (req, res) => {
+  try {
+    const newDentist = new Dentist({ ...req.body, status: 'pending' });
+
+    await newDentist.save();
+
+    const adminUser = await User.findOne({ isAdmin: true });
+    const unseenNotifications = adminUser.unseenNotifications;
+
+    unseenNotifications.push({
+      type: 'new-dentist-request',
+      message: `${newDentist.firstName} ${newDentist.lastName} has applied for a dentist account`,
+      data: {
+        dentistId: newDentist._id,
+        name: `${newDentist.firstName} ${newDentist.lastName}`,
+      },
+      onClickPath: '/admin/dentists-list',
+    });
+
+    await User.findByIdAndUpdate(adminUser._id, { unseenNotifications });
+    res.status(200).send({
+      success: true,
+      message: 'Dentist account applied successfully',
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: 'Error applying dentist account',
+      error,
+      success: false,
+    });
   }
 });
 
