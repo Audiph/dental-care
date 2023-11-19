@@ -38,9 +38,9 @@ const Notifications = () => {
           </Button>
         </FlexBetween>
         <List dense={true}>
-          {user?.unseenNotifications?.map((item) => {
+          {user?.unseenNotifications?.map((item, index) => {
             return (
-              <ListItem>
+              <ListItem key={index}>
                 <ListItemIcon
                   sx={{
                     '& svg': {
