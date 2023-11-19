@@ -4,7 +4,10 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  Menu,
+  MenuItem,
 } from '@mui/material';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink } from 'react-router-dom';
@@ -81,16 +84,19 @@ const Navbar = () => {
             )}
           </NavLink>
           {user ? (
-            <Button
-              onClick={() => {
-                login
-                  ? dispatch(toggleLogin(login))
-                  : dispatch(toggleLogin(!login));
-                dispatch(showModal());
-              }}
-            >
-              {user?.name}
-            </Button>
+            <PopupState variant="popover" popupId="demo-popup-menu">
+              {(popupState) => (
+                <Fragment>
+                  <Button variant="contained" {...bindTrigger(popupState)}>
+                    {user?.name}
+                  </Button>
+                  <Menu {...bindMenu(popupState)}>
+                    <MenuItem onClick={popupState.close}>Profile</MenuItem>
+                    <MenuItem onClick={popupState.close}>Logout</MenuItem>
+                  </Menu>
+                </Fragment>
+              )}
+            </PopupState>
           ) : (
             <Button
               onClick={() => {
