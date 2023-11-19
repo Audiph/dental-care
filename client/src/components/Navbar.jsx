@@ -10,7 +10,7 @@ import {
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MenuIcon from '@mui/icons-material/Menu';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import FlexBetween from './common/FlexBetween';
 import { Fragment, useState } from 'react';
 import Sidebar from './Sidebar';
@@ -26,6 +26,7 @@ const Navbar = () => {
   const { palette } = useTheme();
   const isBelowSmallScreen = useMediaQuery('(max-width: 992px)');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <Fragment>
@@ -92,7 +93,15 @@ const Navbar = () => {
                   </Button>
                   <Menu {...bindMenu(popupState)}>
                     <MenuItem onClick={popupState.close}>Profile</MenuItem>
-                    <MenuItem onClick={popupState.close}>Logout</MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        localStorage.clear();
+                        navigate('/');
+                        window.location.reload();
+                      }}
+                    >
+                      Logout
+                    </MenuItem>
                   </Menu>
                 </Fragment>
               )}

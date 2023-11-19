@@ -34,10 +34,26 @@ const ProtectedRoute = (props) => {
         return;
       }
 
-      const { name, email } = res.data;
+      const {
+        name,
+        email,
+        isAdmin,
+        isDoctor,
+        seenNotifications,
+        unseenNotifications,
+      } = res.data;
 
       dispatch(hideLoading());
-      dispatch(setUser({ name, email }));
+      dispatch(
+        setUser({
+          name,
+          email,
+          isAdmin,
+          isDoctor,
+          seenNotifications,
+          unseenNotifications,
+        })
+      );
     } catch (error) {
       console.error(error);
       localStorage.clear();
