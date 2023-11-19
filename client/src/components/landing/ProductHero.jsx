@@ -4,12 +4,11 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  useMediaQuery,
 } from '@mui/material';
-import dentalImg from '../assets/product-hero.jpg';
+import dentalImg from '@/assets/product-hero.jpg';
 import { useDispatch } from 'react-redux';
-import { showRegister } from '../redux/userSlice';
-import { showModal } from '../redux/alertsSlice';
+import { showRegister } from '@/redux/userSlice';
+import { showModal } from '@/redux/alertsSlice';
 
 const ProductHero = () => {
   const dispatch = useDispatch();

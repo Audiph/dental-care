@@ -1,7 +1,6 @@
 import {
   Button,
   IconButton,
-  Typography,
   useMediaQuery,
   useTheme,
   Menu,
@@ -11,16 +10,15 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink, useNavigate } from 'react-router-dom';
-import FlexBetween from './common/FlexBetween';
+import FlexBetween from '../common/FlexBetween';
 import { Fragment } from 'react';
 import Sidebar from './Sidebar';
-import Title from './common/Title';
+import Title from '../common/Title';
 import AuthModal from './AuthModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { showModal, showSideNav } from '../redux/alertsSlice';
-import { logout, toggleLogin } from '../redux/userSlice';
-import { appLinks } from '../utils/util';
-import { adminLinks, dentistLinks, userLinks } from '../utils/constants';
+import { showModal, showSideNav } from '@/redux/alertsSlice';
+import { logout, toggleLogin } from '@/redux/userSlice';
+import { appLinks } from '@/utils/util';
 
 const Navbar = () => {
   const { login, user } = useSelector((state) => state.user);

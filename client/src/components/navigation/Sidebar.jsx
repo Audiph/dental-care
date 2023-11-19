@@ -1,10 +1,9 @@
 import { Box, Divider, Drawer, useTheme } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import { userLinks } from '../utils/constants';
-import Title from './common/Title';
+import Title from '../common/Title';
 import { useDispatch, useSelector } from 'react-redux';
-import { hideSideNav } from '../redux/alertsSlice';
-import { appLinks } from '../utils/util';
+import { hideSideNav } from '../../redux/alertsSlice';
+import { appLinks } from '../../utils/util';
 
 const Sidebar = () => {
   const { sideNav } = useSelector((state) => state.alerts);

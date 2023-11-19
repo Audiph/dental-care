@@ -1,24 +1,13 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  Link,
-  Modal,
-  TextField,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Button, Grid, Modal, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import axios from 'axios';
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { BASE_URL } from '../utils/constants';
-import { showLoading, hideLoading, hideModal } from '../redux/alertsSlice';
+import { BASE_URL } from '../../utils/constants';
+import { showLoading, hideLoading, hideModal } from '../../redux/alertsSlice';
 import toast from 'react-hot-toast';
-import { toggleLogin } from '../redux/userSlice';
+import { toggleLogin } from '../../redux/userSlice';
 
 const AuthModal = () => {
   const { loading, modal } = useSelector((state) => state.alerts);

@@ -1,13 +1,11 @@
 import {
   Box,
-  Button,
   Container,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import ServiceBox from './common/ServiceBox';
-import { services } from '../utils/constants';
+import { services } from '../../utils/constants';
 import { Link } from 'react-router-dom';
 
 const Services = () => {
