@@ -1,7 +1,11 @@
 import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import ApprovalIcon from '@mui/icons-material/Approval';
 
-export const navLinks = [
+export const ADMIN = 'ADMIN';
+export const USER = 'USER';
+export const DENTIST = 'DENTIST';
+
+export const userLinks = [
   {
     id: 1,
     path: '/',
@@ -16,6 +20,37 @@ export const navLinks = [
     id: 3,
     path: '/apply-dentist',
     name: 'Apply as Dentist',
+  },
+];
+
+export const dentistLinks = [
+  {
+    id: 1,
+    path: '/',
+    name: 'Home',
+  },
+  {
+    id: 2,
+    path: '/dentist/appointments',
+    name: 'Appointments',
+  },
+];
+
+export const adminLinks = [
+  {
+    id: 1,
+    path: '/',
+    name: 'Home',
+  },
+  {
+    id: 2,
+    path: '/admin/users-list',
+    name: 'Users',
+  },
+  {
+    id: 3,
+    path: '/admin/dentists-list',
+    name: 'Dentists',
   },
 ];
 

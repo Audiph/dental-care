@@ -18,7 +18,11 @@ export const userSlice = createSlice({
     showRegister: (state) => {
       state.login = false;
     },
+
+    logout: (state) => {
+      state.user = null;
+    },
   },
 });
 
-export const { setUser, toggleLogin, showRegister } = userSlice.actions;
+export const { setUser, toggleLogin, showRegister, logout } = userSlice.actions;

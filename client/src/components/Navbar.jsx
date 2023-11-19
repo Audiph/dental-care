@@ -12,21 +12,25 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink, useNavigate } from 'react-router-dom';
 import FlexBetween from './common/FlexBetween';
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import Sidebar from './Sidebar';
-import { navLinks } from '../utils/constants';
 import Title from './common/Title';
 import AuthModal from './AuthModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { showModal, showSideNav } from '../redux/alertsSlice';
-import { toggleLogin } from '../redux/userSlice';
+import { logout, toggleLogin } from '../redux/userSlice';
+import { appLinks } from '../utils/util';
+import { adminLinks, dentistLinks, userLinks } from '../utils/constants';
 
 const Navbar = () => {
   const { login, user } = useSelector((state) => state.user);
+  console.log('🚀 ~ file: Navbar.jsx:26 ~ Navbar ~ user:', user);
   const { palette } = useTheme();
   const isBelowSmallScreen = useMediaQuery('(max-width: 992px)');
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const links = appLinks(user);
 
   return (
     <Fragment>
@@ -66,7 +70,7 @@ const Navbar = () => {
 
         {/* MIDDLE SIDE */}
         <FlexBetween gap="2rem" sx={isBelowSmallScreen && { display: 'none' }}>
-          {navLinks.map(({ id, path, name }) => {
+          {links?.map(({ id, path, name }) => {
             return (
               <NavLink to={path} className="nav-link" key={id}>
                 {name}
@@ -92,12 +96,20 @@ const Navbar = () => {
                     {user?.name}
                   </Button>
                   <Menu {...bindMenu(popupState)}>
-                    <MenuItem onClick={popupState.close}>Profile</MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        popupState.close();
+                        navigate(`/profile/${user?.id}`);
+                      }}
+                    >
+                      Profile
+                    </MenuItem>
                     <MenuItem
                       onClick={() => {
                         localStorage.clear();
+                        popupState.close();
+                        dispatch(logout());
                         navigate('/');
-                        window.location.reload();
                       }}
                     >
                       Logout

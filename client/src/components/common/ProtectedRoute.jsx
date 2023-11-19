@@ -35,10 +35,11 @@ const ProtectedRoute = (props) => {
       }
 
       const {
+        id,
         name,
         email,
         isAdmin,
-        isDoctor,
+        isDentist,
         seenNotifications,
         unseenNotifications,
       } = res.data;
@@ -46,10 +47,11 @@ const ProtectedRoute = (props) => {
       dispatch(hideLoading());
       dispatch(
         setUser({
+          id,
           name,
           email,
           isAdmin,
-          isDoctor,
+          isDentist,
           seenNotifications,
           unseenNotifications,
         })
