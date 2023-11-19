@@ -81,7 +81,10 @@ const Navbar = () => {
         <FlexBetween gap="2rem">
           <NavLink to="/" className="nav-link">
             {user && (
-              <Badge badgeContent={4} color="secondary">
+              <Badge
+                badgeContent={user?.unseenNotifications.length}
+                color="secondary"
+              >
                 <NotificationsIcon
                   sx={{ fontSize: '2rem', paddingTop: '0.25rem' }}
                 />
