@@ -61,11 +61,15 @@ router.post('/login', async (req, res) => {
       expiresIn: '1d',
     });
 
+    const { isAdmin, isDoctor } = user;
+
     res.status(200).send({
       message: 'Login Successful',
       success: true,
       token,
       id: user._id,
+      isAdmin,
+      isDoctor,
     });
   } catch (error) {
     res
