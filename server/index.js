@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import userRoutes from './routes/userRoute.js';
+import adminRoutes from './routes/adminRoute.js';
 
 // CONFIGURATIONS
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use('/api/user', userRoutes);
+app.use('/api/admin', adminRoutes);
 
 const PORT = process.env.PORT || 9000;
 mongoose

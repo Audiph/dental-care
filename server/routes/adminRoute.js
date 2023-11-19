@@ -5,6 +5,7 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
+// GET ALL DENTISTS
 router.get('/get-all-dentists', authMiddleware, async (_, res) => {
   try {
     const dentists = await Dentist.find({});
@@ -23,6 +24,7 @@ router.get('/get-all-dentists', authMiddleware, async (_, res) => {
   }
 });
 
+// GET ALL USERS
 router.get('/get-all-users', authMiddleware, async (_, res) => {
   try {
     const users = await User.find({});
@@ -77,4 +79,4 @@ router.post(
   }
 );
 
-module.exports = router;
+export default router;
