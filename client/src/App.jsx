@@ -5,11 +5,13 @@ import { themeSettings } from './theme';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import {
   ApplyDentist,
+  DentistsList,
   Error,
   HomeLayout,
   Landing,
   Notifications,
   User,
+  UsersList,
 } from './pages';
 import { Toaster } from 'react-hot-toast';
 import { ProtectedRoute } from './components';
@@ -55,6 +57,22 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <User />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/admin/users-list',
+        element: (
+          <ProtectedRoute>
+            <UsersList />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/admin/dentists-list',
+        element: (
+          <ProtectedRoute>
+            <DentistsList />
           </ProtectedRoute>
         ),
       },

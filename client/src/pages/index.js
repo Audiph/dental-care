@@ -5,3 +5,6 @@ export { default as Landing } from './Landing';
 export { default as User } from './User';
 export { default as ApplyDentist } from './ApplyDentist';
 export { default as Notifications } from './Notifications';
+
+export { default as DentistsList } from './admin/DentistsList';
+export { default as UsersList } from './admin/UsersList';
