@@ -78,6 +78,7 @@ const ApplyDentist = () => {
             color="info"
           />
           <TextField
+            type="number"
             margin="normal"
             required
             fullWidth
