@@ -7,5 +7,7 @@ export { default as Services } from './landing/Services';
 
 export { default as FlexBetween } from './common/FlexBetween';
 export { default as Title } from './common/Title';
+export { default as FormBox } from './common/FormBox';
 export { default as ProtectedRoute } from './common/ProtectedRoute';
 export { default as Loading } from './common/Loading';
+export { default as PageHeader } from './common/PageHeader';
