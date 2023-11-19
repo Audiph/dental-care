@@ -59,7 +59,11 @@ const ApplyDentist = () => {
       dispatch(hideLoading());
       toast.success(res.data.message);
       navigate(`/profile/${user.id}`);
-    } catch (error) {}
+    } catch (error) {
+      toast.error('Something went wrong!');
+      console.error(error);
+      dispatch(hideLoading());
+    }
   };
 
   return (

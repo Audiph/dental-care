@@ -9,7 +9,7 @@ const User = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios
+      await axios
         .post(
           `${BASE_URL}/api/user/get-user-info-by-id`,
           {},
@@ -21,7 +21,9 @@ const User = () => {
         )
         .then((res) => res)
         .catch((err) => err.response);
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
