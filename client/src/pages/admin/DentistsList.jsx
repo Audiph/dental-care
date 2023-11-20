@@ -13,15 +13,53 @@ import {
   TableRow,
   useTheme,
 } from '@mui/material';
-import { FormBox, PageHeader } from '../../components';
-import { dentistsColumns } from '../../utils/constants';
+import { FormBox, Loading, PageHeader } from '../../components';
+import { BASE_URL, dentistsColumns } from '../../utils/constants';
 import { getAllDentists } from '../../redux/dentistSlice';
+import { hideLoading, showLoading } from '../../redux/alertsSlice';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const DentistsList = () => {
   const { dentists } = useSelector((state) => state.dentist);
   const { user } = useSelector((state) => state.user);
+  const { loading } = useSelector((state) => state.alerts);
   const { palette } = useTheme();
   const dispatch = useDispatch();
+
+  const changeDentistStatus = async ({ _id, userId }, status) => {
+    try {
+      dispatch(showLoading());
+      const res = await axios
+        .post(
+          `${BASE_URL}/api/admin/change-dentist-account-status`,
+          {
+            dentistId: _id,
+            userId,
+            status,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        )
+        .then((res) => res)
+        .catch((err) => err.response);
+
+      if (!res.data.success) {
+        toast.error(res.data.message);
+        dispatch(hideLoading());
+        return;
+      }
+      dispatch(getAllDentists());
+      dispatch(hideLoading());
+    } catch (error) {
+      console.error(error);
+      toast.error('Error changing dentist account status');
+      dispatch(hideLoading());
+    }
+  };
 
   useEffect(() => {
     dispatch(getAllDentists());
@@ -29,6 +67,7 @@ const DentistsList = () => {
 
   return (
     <Container sx={{ position: 'absolute', minWidth: '100%' }}>
+      {loading && <Loading />}
       <PageHeader
         title="DENTISTS"
         color={palette.tertiary[500]}
@@ -99,12 +138,20 @@ const DentistsList = () => {
                       sx={{ fontSize: '0.75rem', color: palette.grey[500] }}
                     >
                       {status === 'pending' && (
-                        <Button variant="outlined" color="primary">
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          onClick={() => changeDentistStatus(item, 'approved')}
+                        >
                           Approved
                         </Button>
                       )}
                       {status === 'approved' && (
-                        <Button variant="outlined" color="secondary">
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          onClick={() => changeDentistStatus(item, 'blocked')}
+                        >
                           Block
                         </Button>
                       )}
