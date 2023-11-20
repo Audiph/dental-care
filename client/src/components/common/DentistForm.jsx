@@ -10,59 +10,12 @@ import {
 import FormBox from './FormBox';
 import { TimeField } from '@mui/x-date-pickers';
 import { LoadingButton } from '@mui/lab';
-import { BASE_URL } from '../../utils/constants';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import { hideLoading, showLoading } from '../../redux/alertsSlice';
+import { useSelector } from 'react-redux';
 
-const DentistForm = () => {
+const DentistForm = ({ handleSubmit }) => {
   const { loading } = useSelector((state) => state.alerts);
-  const { user } = useSelector((state) => state.user);
   const isBelowSmallScreen = useMediaQuery('(max-width: 675px)');
   const { palette } = useTheme();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const newDentist = Object.fromEntries(formData);
-
-    try {
-      dispatch(showLoading());
-      const res = await axios
-        .post(
-          `${BASE_URL}/api/user/apply-dentist-account`,
-          {
-            ...newDentist,
-            userId: user.id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          }
-        )
-        .then((res) => res)
-        .catch((err) => err.response);
-
-      if (!res.data.success) {
-        toast.error(res.data.message);
-        dispatch(hideLoading());
-        return;
-      }
-
-      dispatch(hideLoading());
-      toast.success(res.data.message);
-      navigate(`/profile/${user.id}`);
-    } catch (error) {
-      toast.error('Something went wrong!');
-      console.error(error);
-      dispatch(hideLoading());
-    }
-  };
 
   return (
     <FormBox

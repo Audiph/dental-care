@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 const User = () => {
   const { user } = useSelector((state) => state.user);
-  console.log('🚀 ~ file: User.jsx:7 ~ User ~ user:', user);
   const { palette } = useTheme();
   const navigate = useNavigate();
 
