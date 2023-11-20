@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
     const userExists = await User.findOne({ email });
 
     if (userExists)
-      return res.status(404).send({
+      return res.status(409).send({
         message: `User with email: ${email}, already exists.`,
         success: false,
       });
@@ -140,7 +140,7 @@ router.post('/apply-dentist-account', authMiddleware, async (req, res) => {
     });
 
     await User.findByIdAndUpdate(adminUser._id, { unseenNotifications });
-    res.status(200).send({
+    res.status(201).send({
       success: true,
       message: 'Dentist account applied successfully',
     });
@@ -237,7 +237,7 @@ router.post('/delete-all-notifications', authMiddleware, async (req, res) => {
   }
 });
 
-router.get('/get-all-approved-dentists', authMiddleware, async (req, res) => {
+router.get('/get-all-approved-dentists', authMiddleware, async (_, res) => {
   try {
     const dentists = await Dentist.find({ status: 'approved' });
     res.status(200).send({
@@ -270,7 +270,7 @@ router.post('/book-appointment', authMiddleware, async (req, res) => {
       onClickPath: '/dentist/appointments',
     });
     await user.save();
-    res.status(200).send({
+    res.status(201).send({
       message: 'Appointment booked successfully',
       success: true,
     });
@@ -298,7 +298,7 @@ router.post('/check-booking-availability', authMiddleware, async (req, res) => {
       time: { $gte: fromTime, $lte: toTime },
     });
     if (appointments.length > 0) {
-      return res.status(200).send({
+      return res.status(401).send({
         message: 'Appointments not available',
         success: false,
       });
