@@ -8,7 +8,6 @@ const Dentists = () => {
   const isBelowSmallScreen = useMediaQuery('(max-width: 600px)');
   const isBelowMediumScreen = useMediaQuery('(max-width: 900px)');
   const { dentists } = useSelector((state) => state.dentist);
-  console.log('🚀 ~ file: Dentists.jsx:7 ~ Dentists ~ dentists:', dentists);
   const { palette } = useTheme();
   const dispatch = useDispatch();
 
