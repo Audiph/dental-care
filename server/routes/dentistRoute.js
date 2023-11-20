@@ -19,9 +19,11 @@ router.post(
         dentist,
       });
     } catch (error) {
-      res
-        .status(500)
-        .send({ message: 'Error getting dentist info', success: false, error });
+      res.status(500).send({
+        message: 'Error fetching dentist info',
+        success: false,
+        error,
+      });
     }
   }
 );
@@ -37,7 +39,7 @@ router.post('/get-dentist-info-by-id', authMiddleware, async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .send({ message: 'Error getting dentist info', success: false, error });
+      .send({ message: 'Error fetching dentist info', success: false, error });
   }
 });
 
@@ -55,7 +57,7 @@ router.post('/update-dentist-profile', authMiddleware, async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .send({ message: 'Error getting dentist info', success: false, error });
+      .send({ message: 'Error updating dentist info', success: false, error });
   }
 });
 
