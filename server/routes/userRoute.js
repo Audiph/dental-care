@@ -1,9 +1,11 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import Dentist from '../models/dentistModel.js';
+import Appointment from '../models/appointmentModel.js';
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
 import authMiddleware from '../middlewares/authMiddleware.js';
+import moment from 'moment';
 
 const router = express.Router();
 
@@ -231,6 +233,105 @@ router.post('/delete-all-notifications', authMiddleware, async (req, res) => {
       message: 'Error clearing unseen notifications',
       error,
       success: false,
+    });
+  }
+});
+
+router.get('/get-all-approved-dentists', authMiddleware, async (req, res) => {
+  try {
+    const dentists = await Dentist.find({ status: 'approved' });
+    res.status(200).send({
+      message: 'Dentists fetched successfully',
+      success: true,
+      dentists,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: 'Error fetching approved dentists',
+      success: false,
+      error,
+    });
+  }
+});
+
+router.post('/book-appointment', authMiddleware, async (req, res) => {
+  try {
+    req.body.status = 'pending';
+    req.body.date = moment(req.body.date, 'DD-MM-YYYY').toISOString();
+    req.body.time = moment(req.body.time, 'HH:mm').toISOString();
+    const newAppointment = new Appointment(req.body);
+    await newAppointment.save();
+    //pushing notification to dentist based on his userid
+    const user = await User.findOne({ _id: req.body.dentistInfo.userId });
+    user.unseenNotifications.push({
+      type: 'new-appointment-request',
+      message: `A new appointment request has been made by ${req.body.userInfo.name}`,
+      onClickPath: '/dentist/appointments',
+    });
+    await user.save();
+    res.status(200).send({
+      message: 'Appointment booked successfully',
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: 'Error booking appointment',
+      success: false,
+      error,
+    });
+  }
+});
+
+router.post('/check-booking-availability', authMiddleware, async (req, res) => {
+  try {
+    const date = moment(req.body.date, 'DD-MM-YYYY').toISOString();
+    const fromTime = moment(req.body.time, 'HH:mm')
+      .subtract(1, 'hours')
+      .toISOString();
+    const toTime = moment(req.body.time, 'HH:mm').add(1, 'hours').toISOString();
+    const dentistId = req.body.dentistId;
+    const appointments = await Appointment.find({
+      dentistId,
+      date,
+      time: { $gte: fromTime, $lte: toTime },
+    });
+    if (appointments.length > 0) {
+      return res.status(200).send({
+        message: 'Appointments not available',
+        success: false,
+      });
+    } else {
+      return res.status(200).send({
+        message: 'Appointments available',
+        success: true,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: 'Error booking appointment',
+      success: false,
+      error,
+    });
+  }
+});
+
+router.get('/get-appointments-by-user-id', authMiddleware, async (req, res) => {
+  try {
+    const appointments = await Appointment.find({ userId: req.body.userId });
+    res.status(200).send({
+      message: 'Appointments fetched successfully',
+      success: true,
+      appointments,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: 'Error fetching appointments',
+      success: false,
+      error,
     });
   }
 });
