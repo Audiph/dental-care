@@ -56,6 +56,14 @@ export const adminLinks = [
 
 export const usersColumns = ['Name', 'Email', 'Created At', 'Actions'];
 
+export const dentistsColumns = [
+  'Name',
+  'Phone',
+  'Created At',
+  'Status',
+  'Actions',
+];
+
 export const services = [
   {
     id: 1,

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../redux/userSlice';
 import {
+  Button,
   Container,
   Paper,
   Table,
@@ -16,7 +17,7 @@ import { FormBox, PageHeader } from '../../components';
 import { usersColumns } from '../../utils/constants';
 
 const UsersList = () => {
-  const { users } = useSelector((state) => state.user);
+  const { users, user } = useSelector((state) => state.user);
   const { palette } = useTheme();
   const dispatch = useDispatch();
 
@@ -39,6 +40,7 @@ const UsersList = () => {
                 sx={{
                   bgcolor: palette.background.light,
                 }}
+                key={user.id}
               >
                 {usersColumns.map((title) => {
                   return (
@@ -82,7 +84,9 @@ const UsersList = () => {
                     <TableCell
                       sx={{ fontSize: '0.75rem', color: palette.grey[500] }}
                     >
-                      Block
+                      <Button variant="outlined" color="secondary">
+                        Block
+                      </Button>
                     </TableCell>
                   </TableRow>
                 );
