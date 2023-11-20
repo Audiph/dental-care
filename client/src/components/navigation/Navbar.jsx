@@ -159,7 +159,17 @@ const Navbar = () => {
               </Badge>
             )}
           </Button>
-          {user ? (
+          {user?.isAdmin ? (
+            <Button
+              onClick={() => {
+                localStorage.clear();
+                dispatch(logout());
+                navigate('/');
+              }}
+            >
+              Logout
+            </Button>
+          ) : user ? (
             <PopupState variant="popover" popupId="demo-popup-menu">
               {(popupState) => (
                 <Fragment>
