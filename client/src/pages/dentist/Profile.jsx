@@ -3,7 +3,7 @@ import { DentistForm, PageHeader } from '../../components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Container, useTheme } from '@mui/material';
 import { useEffect } from 'react';
-import { getDentistData } from '../../redux/dentistSlice';
+import { getDentistDataByUser } from '../../redux/dentistSlice';
 import { BASE_URL, delimiter } from '../../utils/constants';
 import toast from 'react-hot-toast';
 import { hideLoading, showLoading } from '../../redux/alertsSlice';
@@ -58,7 +58,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    dispatch(getDentistData(params));
+    dispatch(getDentistDataByUser(params));
   }, []);
 
   return (

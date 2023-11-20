@@ -3,8 +3,8 @@ import { BASE_URL } from '../utils/constants';
 import axios from 'axios';
 import { hideLoading, showLoading } from './alertsSlice';
 
-export const getDentistData = createAsyncThunk(
-  'dentist/getDentistData',
+export const getDentistDataByUser = createAsyncThunk(
+  'dentist/getDentistDataByUser',
   async (params, thunkAPI) => {
     try {
       thunkAPI.dispatch(showLoading());
@@ -109,7 +109,7 @@ export const dentistSlice = createSlice({
       state.dentists = action.payload;
     });
 
-    builder.addCase(getDentistData.fulfilled, (state, action) => {
+    builder.addCase(getDentistDataByUser.fulfilled, (state, action) => {
       state.dentist = action.payload;
     });
   },
