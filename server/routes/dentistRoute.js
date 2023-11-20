@@ -16,7 +16,7 @@ router.post(
       res.status(200).send({
         success: true,
         message: 'Dentist info fetched successfully',
-        data: dentist,
+        dentist,
       });
     } catch (error) {
       res
@@ -32,7 +32,7 @@ router.post('/get-dentist-info-by-id', authMiddleware, async (req, res) => {
     res.status(200).send({
       success: true,
       message: 'Dentist info fetched successfully',
-      data: dentist,
+      dentist,
     });
   } catch (error) {
     res
@@ -50,7 +50,7 @@ router.post('/update-dentist-profile', authMiddleware, async (req, res) => {
     res.status(200).send({
       success: true,
       message: 'Dentist profile updated successfully',
-      data: dentist,
+      dentist,
     });
   } catch (error) {
     res
@@ -69,7 +69,7 @@ router.get(
       res.status(200).send({
         message: 'Appointments fetched successfully',
         success: true,
-        data: appointments,
+        appointments,
       });
     } catch (error) {
       console.log(error);
