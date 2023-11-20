@@ -55,7 +55,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/book-appointment/:doctorId',
+        path: '/book-appointment/:dentistId',
         element: (
           <ProtectedRoute>
             <BookAppointment />

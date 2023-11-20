@@ -37,6 +37,40 @@ export const getDentistDataByUser = createAsyncThunk(
   }
 );
 
+export const getDentistDataById = createAsyncThunk(
+  'dentist/getDentistDataById',
+  async (params, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(showLoading());
+      const res = await axios
+        .post(
+          `${BASE_URL}/api/dentist/get-dentist-info-by-id`,
+          {
+            dentistId: params.dentistId,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        )
+        .then((res) => res)
+        .catch((err) => err.response);
+
+      if (!res.data.success) {
+        thunkAPI.dispatch(hideLoading());
+        return;
+      }
+      thunkAPI.dispatch(hideLoading());
+      return res.data.dentist;
+    } catch (error) {
+      console.error(error);
+      thunkAPI.dispatch(hideLoading());
+      return thunkAPI.rejectWithValue('something went wrong');
+    }
+  }
+);
+
 export const getAllDentists = createAsyncThunk(
   'dentist/getAllDentists',
   async (_, thunkAPI) => {
@@ -110,6 +144,10 @@ export const dentistSlice = createSlice({
     });
 
     builder.addCase(getDentistDataByUser.fulfilled, (state, action) => {
+      state.dentist = action.payload;
+    });
+
+    builder.addCase(getDentistDataById.fulfilled, (state, action) => {
       state.dentist = action.payload;
     });
   },
