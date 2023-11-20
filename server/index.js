@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import userRoutes from './routes/userRoute.js';
 import adminRoutes from './routes/adminRoute.js';
+import dentistRoutes from './routes/dentistRoute.js';
 
 // CONFIGURATIONS
 dotenv.config();
@@ -21,6 +22,7 @@ app.use(cors());
 
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/dentist', dentistRoutes);
 
 const PORT = process.env.PORT || 9000;
 mongoose
