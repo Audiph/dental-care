@@ -14,7 +14,7 @@ export const userLinks = [
   },
   {
     id: 2,
-    path: '/appointments',
+    path: '/available-dentists',
     name: 'Appointments',
   },
   {
@@ -70,7 +70,7 @@ export const services = [
     id: 1,
     title: 'Book Appointment',
     desc: " Experience the convenience of seamless dental care with our online appointment booking platform. Say goodbye to waiting on hold and hello to hassle-free scheduling at your fingertips. Whether you're due for a routine check-up or seeking specialized treatment, our user-friendly system ensures that securing a dental appointment is as easy as a click away. Take control of your oral health journey and book your next visit online – because a healthier, happier smile is just a few clicks closer",
-    path: '/appointments',
+    path: '/available-dentists',
     icon: <BookOnlineIcon fontSize="1px" />,
   },
   {

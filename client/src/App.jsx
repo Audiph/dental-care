@@ -29,7 +29,7 @@ const router = createBrowserRouter([
         element: <Landing />,
       },
       {
-        path: '/appointments',
+        path: '/available-dentists',
         element: (
           <ProtectedRoute>
             <div>Appointments...</div>
