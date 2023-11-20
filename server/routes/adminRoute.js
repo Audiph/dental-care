@@ -17,7 +17,7 @@ router.get('/get-all-dentists', authMiddleware, async (_, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      message: 'Error applying dentist account',
+      message: 'Error fetching all dentists',
       success: false,
       error,
     });
@@ -36,13 +36,14 @@ router.get('/get-all-users', authMiddleware, async (_, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      message: 'Error applying dentist account',
+      message: 'Error fetching all users',
       success: false,
       error,
     });
   }
 });
 
+// CHANGE DENTIST STATUS
 router.post(
   '/change-dentist-account-status',
   authMiddleware,
@@ -71,7 +72,7 @@ router.post(
     } catch (error) {
       console.log(error);
       res.status(500).send({
-        message: 'Error applying dentist account',
+        message: 'Error changing dentist status',
         success: false,
         error,
       });
