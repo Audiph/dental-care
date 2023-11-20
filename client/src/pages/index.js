@@ -8,3 +8,5 @@ export { default as Notifications } from './Notifications';
 
 export { default as DentistsList } from './admin/DentistsList';
 export { default as UsersList } from './admin/UsersList';
+
+export { default as Profile } from './dentist/Profile';
