@@ -134,6 +134,7 @@ const DentistForm = ({ handleSubmit, dentist }) => {
           defaultValue={dentist?.feePerConsultation}
         />
         <SingleInputTimeRangeField
+          ampm={false}
           margin="normal"
           label="Timings"
           required
@@ -143,8 +144,8 @@ const DentistForm = ({ handleSubmit, dentist }) => {
           autoFocus
           defaultValue={
             dentist && [
-              moment(dentist?.timings[0], 'HH:mm a'),
-              moment(dentist?.timings[1], 'HH:mm a'),
+              moment(dentist?.timings[0], 'HH:mm'),
+              moment(dentist?.timings[1], 'HH:mm'),
             ]
           }
         />
