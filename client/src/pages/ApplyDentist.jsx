@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Container, useTheme } from '@mui/material';
 import { PageHeader, DentistForm } from '../components';
-import { BASE_URL } from '../utils/constants';
+import { BASE_URL, delimiter } from '../utils/constants';
 import { hideLoading, showLoading } from '../redux/alertsSlice';
 
 const ApplyDentist = () => {
@@ -18,6 +18,7 @@ const ApplyDentist = () => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const newDentist = Object.fromEntries(formData);
+    const newTimings = newDentist.timings.split(delimiter, 2);
 
     try {
       dispatch(showLoading());
@@ -27,6 +28,7 @@ const ApplyDentist = () => {
           {
             ...newDentist,
             userId: user.id,
+            timings: newTimings,
           },
           {
             headers: {

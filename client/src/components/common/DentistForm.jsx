@@ -8,7 +8,7 @@ import {
   useTheme,
 } from '@mui/material';
 import FormBox from './FormBox';
-import { TimeField } from '@mui/x-date-pickers';
+import { SingleInputTimeRangeField } from '@mui/x-date-pickers-pro/SingleInputTimeRangeField';
 import { LoadingButton } from '@mui/lab';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
@@ -133,7 +133,7 @@ const DentistForm = ({ handleSubmit, dentist }) => {
           color="info"
           defaultValue={dentist?.feePerConsultation}
         />
-        <TimeField
+        <SingleInputTimeRangeField
           margin="normal"
           label="Timings"
           required
@@ -141,7 +141,12 @@ const DentistForm = ({ handleSubmit, dentist }) => {
           id="timings"
           name="timings"
           autoFocus
-          defaultValue={dentist && moment(dentist?.timings[0], 'HH:mm a')}
+          defaultValue={
+            dentist && [
+              moment(dentist?.timings[0], 'HH:mm a'),
+              moment(dentist?.timings[1], 'HH:mm a'),
+            ]
+          }
         />
       </Box>
       <Divider sx={{ my: '1rem' }} />
