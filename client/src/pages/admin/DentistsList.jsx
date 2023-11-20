@@ -52,6 +52,7 @@ const DentistsList = () => {
         dispatch(hideLoading());
         return;
       }
+      toast.success(res.data.message);
       dispatch(getAllDentists());
       dispatch(hideLoading());
     } catch (error) {
