@@ -16,7 +16,7 @@ const User = () => {
   return (
     <Container sx={{ position: 'absolute', minWidth: '100%' }}>
       <PageHeader
-        title="NOTIFICATIONS"
+        title="USER PROFILE"
         color={palette.tertiary[500]}
         style={{ paddingTop: '57px' }}
       />
