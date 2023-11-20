@@ -42,7 +42,7 @@ const Navbar = () => {
         .post(
           `${BASE_URL}/api/user/mark-all-notifications-as-seen`,
           {
-            useId: user.id,
+            userId: user.id,
           },
           {
             headers: {

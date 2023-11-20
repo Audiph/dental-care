@@ -30,7 +30,7 @@ const Notifications = () => {
         .post(
           `${BASE_URL}/api/user/delete-all-notifications`,
           {
-            useId: user.id,
+            userId: user.id,
           },
           {
             headers: {
@@ -117,7 +117,7 @@ const Notifications = () => {
                 </ListItemIcon>
                 <ListItemText
                   primary={item.message}
-                  secondary={item.data.name}
+                  secondary={item.data?.name}
                   sx={{
                     '& span': { color: palette.grey[500], fontSize: '1rem' },
                     '& p': {
