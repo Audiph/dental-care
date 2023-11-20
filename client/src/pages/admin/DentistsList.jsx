@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 import {
   Button,
   Container,
@@ -81,12 +80,12 @@ const DentistsList = () => {
                 sx={{
                   bgcolor: palette.background.light,
                 }}
-                key={uuidv4()}
               >
                 {dentistsColumns.map((title) => {
                   return (
                     <TableCell
                       sx={{ fontSize: '1rem', color: palette.grey[100] }}
+                      key={title}
                     >
                       {title}
                     </TableCell>

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../redux/userSlice';
-import { v4 as uuidv4 } from 'uuid';
 import {
   Button,
   Container,
@@ -41,12 +40,12 @@ const UsersList = () => {
                 sx={{
                   bgcolor: palette.background.light,
                 }}
-                key={uuidv4()}
               >
                 {usersColumns.map((title) => {
                   return (
                     <TableCell
                       sx={{ fontSize: '1rem', color: palette.grey[100] }}
+                      key={title}
                     >
                       {title}
                     </TableCell>
