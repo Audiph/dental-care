@@ -27,7 +27,7 @@ router.get('/get-all-dentists', authMiddleware, async (_, res) => {
 // GET ALL USERS
 router.get('/get-all-users', authMiddleware, async (_, res) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({ isAdmin: false });
     res.status(200).send({
       message: 'Users fetched successfully',
       success: true,
