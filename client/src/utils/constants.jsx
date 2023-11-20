@@ -4,6 +4,7 @@ import ApprovalIcon from '@mui/icons-material/Approval';
 export const ADMIN = 'ADMIN';
 export const USER = 'USER';
 export const DENTIST = 'DENTIST';
+export const delimiter = ' – '; // This regex allows for variable spacing around the hyphen
 
 export const userLinks = [
   {
