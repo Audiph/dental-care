@@ -2,6 +2,7 @@ import { Container, useTheme } from '@mui/material';
 import { PageHeader } from '../components';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Profile from './dentist/Profile';
 
 const User = () => {
   const { user } = useSelector((state) => state.user);
@@ -11,6 +12,10 @@ const User = () => {
   if (user?.isAdmin) {
     navigate('/admin/users-list');
     return;
+  }
+
+  if (user?.isDentist) {
+    return <Profile />;
   }
 
   return (

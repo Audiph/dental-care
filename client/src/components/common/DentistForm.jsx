@@ -11,8 +11,10 @@ import FormBox from './FormBox';
 import { TimeField } from '@mui/x-date-pickers';
 import { LoadingButton } from '@mui/lab';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
-const DentistForm = ({ handleSubmit }) => {
+const DentistForm = ({ handleSubmit, dentist }) => {
+  const { user } = useSelector((state) => state.user);
   const { loading } = useSelector((state) => state.alerts);
   const isBelowSmallScreen = useMediaQuery('(max-width: 675px)');
   const { palette } = useTheme();
@@ -53,6 +55,7 @@ const DentistForm = ({ handleSubmit }) => {
           autoComplete="firstName"
           autoFocus
           color="info"
+          defaultValue={dentist?.firstName}
         />
         <TextField
           margin="normal"
@@ -64,6 +67,7 @@ const DentistForm = ({ handleSubmit }) => {
           autoComplete="lastName"
           autoFocus
           color="info"
+          defaultValue={dentist?.lastName}
         />
         <TextField
           type="number"
@@ -76,6 +80,7 @@ const DentistForm = ({ handleSubmit }) => {
           autoComplete="phoneNumber"
           autoFocus
           color="info"
+          defaultValue={dentist?.phoneNumber}
         />
         <TextField
           margin="normal"
@@ -87,6 +92,7 @@ const DentistForm = ({ handleSubmit }) => {
           autoComplete="address"
           autoFocus
           color="info"
+          defaultValue={dentist?.address}
         />
       </Box>
       <Divider textAlign="center" sx={{ py: '2rem', fontSize: 20 }}>
@@ -112,6 +118,7 @@ const DentistForm = ({ handleSubmit }) => {
           autoComplete="experience"
           autoFocus
           color="info"
+          defaultValue={dentist?.experience}
         />
         <TextField
           type="number"
@@ -124,6 +131,7 @@ const DentistForm = ({ handleSubmit }) => {
           autoComplete="feePerConsultation"
           autoFocus
           color="info"
+          defaultValue={dentist?.feePerConsultation}
         />
         <TimeField
           margin="normal"
@@ -133,6 +141,7 @@ const DentistForm = ({ handleSubmit }) => {
           id="timings"
           name="timings"
           autoFocus
+          defaultValue={dentist && moment(dentist?.timings[0], 'HH:mm a')}
         />
       </Box>
       <Divider sx={{ my: '1rem' }} />
@@ -149,15 +158,17 @@ const DentistForm = ({ handleSubmit }) => {
           </LoadingButton>
         </Grid>
         <Grid item xs={6}>
-          <Button
-            type="reset"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            color="secondary"
-          >
-            RESET
-          </Button>
+          {!user?.isDentist && (
+            <Button
+              type="reset"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              color="secondary"
+            >
+              RESET
+            </Button>
+          )}
         </Grid>
       </Grid>
     </FormBox>
