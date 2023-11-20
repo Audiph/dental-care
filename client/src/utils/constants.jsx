@@ -54,6 +54,8 @@ export const adminLinks = [
   },
 ];
 
+export const usersColumns = ['Name', 'Email', 'Created At', 'Actions'];
+
 export const services = [
   {
     id: 1,
