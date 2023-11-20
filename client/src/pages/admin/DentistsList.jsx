@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllUsers } from '../../redux/userSlice';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Button,
   Container,
@@ -22,7 +22,6 @@ import toast from 'react-hot-toast';
 
 const DentistsList = () => {
   const { dentists } = useSelector((state) => state.dentist);
-  const { user } = useSelector((state) => state.user);
   const { loading } = useSelector((state) => state.alerts);
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -82,7 +81,7 @@ const DentistsList = () => {
                 sx={{
                   bgcolor: palette.background.light,
                 }}
-                key={user.id}
+                key={uuidv4()}
               >
                 {dentistsColumns.map((title) => {
                   return (

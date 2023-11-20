@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../redux/userSlice';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Button,
   Container,
@@ -40,7 +41,7 @@ const UsersList = () => {
                 sx={{
                   bgcolor: palette.background.light,
                 }}
-                key={user.id}
+                key={uuidv4()}
               >
                 {usersColumns.map((title) => {
                   return (
