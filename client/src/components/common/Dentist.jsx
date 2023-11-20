@@ -1,7 +1,9 @@
 import { Button, Card, CardContent, Typography, useTheme } from '@mui/material';
 import FormBox from './FormBox';
+import { Link } from 'react-router-dom';
 
 const Dentist = ({
+  id,
   firstName,
   lastName,
   phoneNumber,
@@ -49,7 +51,15 @@ const Dentist = ({
           Timings: {timings[0]} - {timings[1]}
         </Typography>
       </Card>
-      <Button>Book an Appointment</Button>
+      <Link
+        to={`/book-appointment/${id}`}
+        className="nav-link"
+        style={{
+          paddingLeft: '1rem',
+        }}
+      >
+        Book an Appointment
+      </Link>
     </FormBox>
   );
 };

@@ -5,6 +5,7 @@ import { themeSettings } from './theme';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import {
   ApplyDentist,
+  BookAppointment,
   Dentists,
   DentistsList,
   Error,
@@ -50,6 +51,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <ApplyDentist />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/book-appointment/:doctorId',
+        element: (
+          <ProtectedRoute>
+            <BookAppointment />
           </ProtectedRoute>
         ),
       },
