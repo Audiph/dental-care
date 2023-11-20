@@ -3,6 +3,7 @@ import { PageHeader } from '../components';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Profile from './dentist/Profile';
+import UsersList from './admin/UsersList';
 
 const User = () => {
   const { user } = useSelector((state) => state.user);
@@ -10,8 +11,7 @@ const User = () => {
   const navigate = useNavigate();
 
   if (user?.isAdmin) {
-    navigate('/admin/users-list');
-    return;
+    return <UsersList />;
   }
 
   if (user?.isDentist) {
