@@ -86,7 +86,7 @@ const AuthModal = () => {
         <Typography component="h1" variant="h1">
           {login ? 'Login' : 'Sign Up'}
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           {login ? (
             // LOGIN COMPONENT
             <Fragment>

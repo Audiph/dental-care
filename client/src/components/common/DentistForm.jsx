@@ -23,7 +23,6 @@ const DentistForm = ({ handleSubmit, dentist }) => {
     <FormBox
       component="form"
       onSubmit={handleSubmit}
-      noValidate
       sx={{
         mt: 1,
         p: '2rem',
