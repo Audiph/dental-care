@@ -104,7 +104,24 @@ We have 3 different roles in total
 - Accept or reject user's dentist application
 
 ## 🚀 Deployment <a name = "deployment"></a>
-Add additional notes about how to deploy this on a live system.
+For now, we can utilize its deployment thru Docker image and pulling it to k8s.
+- Just go to root folder of Client and Server and run the commands:
+
+```
+// For Server
+docker build -t <server-name> .
+
+// For Client
+docker build -t <client-name> .
+```
+
+- For k8s, go to kubernetes folder:
+
+```
+minikube start
+
+kubectl apply -f dentalcare.yaml -f dentalcareapi.yaml
+```
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 - [MongoDB](https://www.mongodb.com/) - Database
