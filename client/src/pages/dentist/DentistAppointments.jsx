@@ -31,7 +31,7 @@ const DentistAppointments = () => {
       dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/dentist/change-appointment-status`,
+          `/api/dentist/change-appointment-status`,
           { appointmentId: _id, status: status },
           {
             headers: {

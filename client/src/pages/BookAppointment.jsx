@@ -36,7 +36,7 @@ const BookAppointment = () => {
       dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/user/check-booking-availability`,
+          `/api/user/check-booking-availability`,
           {
             dentistId: params.dentistId,
             date: dateTimeForm.date,
@@ -76,7 +76,7 @@ const BookAppointment = () => {
       dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/user/book-appointment`,
+          `/api/user/book-appointment`,
           {
             dentistId: params.dentistId,
             userId: user.id,

@@ -30,7 +30,7 @@ const DentistsList = () => {
       dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/admin/change-dentist-account-status`,
+          `/api/admin/change-dentist-account-status`,
           {
             dentistId: _id,
             userId,
@@ -116,6 +116,11 @@ const DentistsList = () => {
                       scope="row"
                       sx={{ fontSize: '0.75rem', color: palette.grey[500] }}
                     >
+                      {_id}
+                    </TableCell>
+                    <TableCell
+                      sx={{ fontSize: '0.75rem', color: palette.grey[500] }}
+                    >
                       {firstName} {lastName}
                     </TableCell>
                     <TableCell
@@ -142,7 +147,7 @@ const DentistsList = () => {
                           color="primary"
                           onClick={() => changeDentistStatus(item, 'approved')}
                         >
-                          Approved
+                          Approve
                         </Button>
                       )}
                       {status === 'approved' && (

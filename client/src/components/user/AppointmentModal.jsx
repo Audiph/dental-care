@@ -26,7 +26,7 @@ const AppointmentModal = () => {
       dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/user/check-booking-availability`,
+          `/api/user/check-booking-availability`,
           {
             dentistId: appointment.dentistInfo.userId,
             date: dateTimeForm.date,
@@ -67,7 +67,7 @@ const AppointmentModal = () => {
       dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/user/update-book-appointment`,
+          `/api/user/update-book-appointment`,
           {
             appointmentId: appointment._id,
             dentistInfo: appointment.dentistInfo,
