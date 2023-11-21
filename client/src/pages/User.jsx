@@ -1,31 +1,21 @@
 import { Container, useTheme } from '@mui/material';
-import { PageHeader, Profile } from '../components';
+import { DentistProfile, PageHeader, UserProfile } from '../components';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import UsersList from './admin/UsersList';
 
 const User = () => {
   const { user } = useSelector((state) => state.user);
-  const { palette } = useTheme();
-  const navigate = useNavigate();
 
   if (user?.isAdmin) {
     return <UsersList />;
   }
 
   if (user?.isDentist) {
-    return <Profile />;
+    return <DentistProfile />;
   }
 
-  return (
-    <Container sx={{ position: 'absolute', minWidth: '100%' }}>
-      <PageHeader
-        title="USER PROFILE"
-        color={palette.tertiary[500]}
-        style={{ paddingTop: '57px' }}
-      />
-    </Container>
-  );
+  return <UserProfile />;
 };
 
 export default User;

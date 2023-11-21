@@ -34,20 +34,23 @@ const BookAppointment = () => {
     const dateTimeForm = Object.fromEntries(formData);
     try {
       dispatch(showLoading());
-      const res = await axios.post(
-        `${BASE_URL}/api/user/check-booking-availability`,
-        {
-          dentistId: params.dentistId,
-          date: dateTimeForm.date,
-          time: dateTimeForm.time,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+      const res = await axios
+        .post(
+          `${BASE_URL}/api/user/check-booking-availability`,
+          {
+            dentistId: params.dentistId,
+            date: dateTimeForm.date,
+            time: dateTimeForm.time,
           },
-        }
-      );
-      dispatch(hideLoading());
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        )
+        .then((res) => res)
+        .catch((err) => err.response);
+
       if (!res.data.success) {
         toast.error(res.data.message);
         dispatch(hideLoading());
@@ -71,22 +74,25 @@ const BookAppointment = () => {
     setIsAvailable(false);
     try {
       dispatch(showLoading());
-      const res = await axios.post(
-        `${BASE_URL}/api/user/book-appointment`,
-        {
-          dentistId: params.dentistId,
-          userId: user.id,
-          dentistInfo: dentist,
-          userInfo: user,
-          date: dateTimeForm.date,
-          time: dateTimeForm.time,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+      const res = await axios
+        .post(
+          `${BASE_URL}/api/user/book-appointment`,
+          {
+            dentistId: params.dentistId,
+            userId: user.id,
+            dentistInfo: dentist,
+            userInfo: user,
+            date: dateTimeForm.date,
+            time: dateTimeForm.time,
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        )
+        .then((res) => res)
+        .catch((err) => err.response);
 
       dispatch(hideLoading());
       if (!res.data.success) {

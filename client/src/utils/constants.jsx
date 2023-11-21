@@ -55,9 +55,18 @@ export const adminLinks = [
   },
 ];
 
+export const appointmentsColumns = [
+  'ID',
+  'Dentist',
+  'Phone',
+  'Date & Time',
+  'Status',
+];
+
 export const usersColumns = ['Name', 'Email', 'Created At', 'Actions'];
 
 export const dentistsColumns = [
+  'ID',
   'Name',
   'Phone',
   'Created At',
