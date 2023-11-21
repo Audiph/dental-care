@@ -85,10 +85,25 @@ npm run dev
 // Port will be running on 5173; http://localhost:5173 is your server's url
 ```
 
-End with an example of getting some data out of the system or using it for a little demo.
+Demo video can be seen here:
+https://1drv.ms/v/s!AodZKpfuye9n2h8nlSPFp12Gyr3F?e=pVcfwF
 
 ## 🎈 Usage <a name="usage"></a>
-Add notes about how to use the system.
+We have 3 different roles in total
+
+### User
+- Can apply as Dentist
+- Book/Cancel/Remove/Update an Appointment
+- See list of Dentist available
+
+### Dentist
+- Can see list of users who booked an appointment
+- Accept or reject user's booking
+- Update his information
+
+### Admin
+- See list of users and dentists
+- Accept or reject user's dentist application
 
 ## 🚀 Deployment <a name = "deployment"></a>
 Add additional notes about how to deploy this on a live system.
@@ -96,15 +111,9 @@ Add additional notes about how to deploy this on a live system.
 ## ⛏️ Built Using <a name = "built_using"></a>
 - [MongoDB](https://www.mongodb.com/) - Database
 - [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
+- [ReactJS](https://react.dev/) - Web Framework
+- [MaterialUI](https://mui.com/) - Web Component Library
 - [NodeJs](https://nodejs.org/en/) - Server Environment
 
 ## ✍️ Authors <a name = "authors"></a>
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
-
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
-
-## 🎉 Acknowledgements <a name = "acknowledgement"></a>
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
+- [@Audiph](https://github.com/Audiph) - Initial work
