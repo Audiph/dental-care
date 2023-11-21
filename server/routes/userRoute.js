@@ -336,4 +336,80 @@ router.get('/get-appointments-by-user-id', authMiddleware, async (req, res) => {
   }
 });
 
+router.post('/get-appointment-info-by-id', authMiddleware, async (req, res) => {
+  try {
+    const appointment = await Appointment.findOne({
+      _id: req.body.appointmentId,
+    });
+
+    res.status(200).send({
+      message: 'Appointment fetched successfully',
+      success: true,
+      appointment,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: 'Error getting appointment info',
+      error,
+      success: false,
+    });
+  }
+});
+
+router.post('/update-book-appointment', authMiddleware, async (req, res) => {
+  try {
+    const { appointmentId, date, time } = req.body;
+    await Appointment.findByIdAndUpdate(appointmentId, {
+      date: moment(date, 'DD-MM-YYYY').toISOString(),
+      time: moment(time, 'HH:mm').toISOString(),
+      status: 'pending',
+    });
+
+    const user = await User.findOne({ _id: req.body.dentistInfo.userId });
+    user.unseenNotifications.push({
+      type: 'appointment-change-request',
+      message: `a change of appointment schedule has been made by ${req.body.userInfo.name}`,
+      onClickPath: '/dentist/appointments',
+    });
+    await user.save();
+    res.status(201).send({
+      message: 'Appointment updated successfully',
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: 'Error updating appointment status',
+      success: false,
+      error,
+    });
+  }
+});
+
+router.post('/remove-book-appointment', authMiddleware, async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    await Appointment.findByIdAndDelete(appointmentId);
+
+    const user = await User.findOne({ _id: req.body.dentistInfo.userId });
+    user.unseenNotifications.push({
+      type: 'appointment-cancelled',
+      message: `${req.body.userInfo.name} has cancelled/removed the appointment`,
+      onClickPath: '/dentist/appointments',
+    });
+    await user.save();
+    res.status(200).send({
+      message: 'Appointment updated successfully',
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: 'Error updating appointment status',
+      success: false,
+      error,
+    });
+  }
+});
+
 export default router;
