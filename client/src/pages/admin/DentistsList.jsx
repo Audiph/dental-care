@@ -21,6 +21,10 @@ import toast from 'react-hot-toast';
 
 const DentistsList = () => {
   const { dentists } = useSelector((state) => state.dentist);
+  console.log(
+    '🚀 ~ file: DentistsList.jsx:24 ~ DentistsList ~ dentists:',
+    dentists
+  );
   const { loading } = useSelector((state) => state.alerts);
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -116,6 +120,11 @@ const DentistsList = () => {
                       scope="row"
                       sx={{ fontSize: '0.75rem', color: palette.grey[500] }}
                     >
+                      {_id}
+                    </TableCell>
+                    <TableCell
+                      sx={{ fontSize: '0.75rem', color: palette.grey[500] }}
+                    >
                       {firstName} {lastName}
                     </TableCell>
                     <TableCell
@@ -142,7 +151,7 @@ const DentistsList = () => {
                           color="primary"
                           onClick={() => changeDentistStatus(item, 'approved')}
                         >
-                          Approved
+                          Approve
                         </Button>
                       )}
                       {status === 'approved' && (
