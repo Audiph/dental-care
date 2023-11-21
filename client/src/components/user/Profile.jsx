@@ -16,6 +16,7 @@ import FormBox from '../common/FormBox';
 import { dentistsColumns } from '../../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllAppointmentsByUser } from '../../redux/appointmentSlice';
+import moment from 'moment';
 
 const Profile = () => {
   const { appointments } = useSelector((state) => state.appointment);
@@ -91,7 +92,8 @@ const Profile = () => {
                     <TableCell
                       sx={{ fontSize: '0.75rem', color: palette.grey[500] }}
                     >
-                      {date} {time}
+                      {moment(date).format('YYYY-MM-DD')}{' '}
+                      {moment(time).format('HH:mm')}
                     </TableCell>
                     <TableCell
                       sx={{ fontSize: '0.75rem', color: palette.grey[500] }}

@@ -123,7 +123,8 @@ const DentistAppointments = () => {
                     <TableCell
                       sx={{ fontSize: '0.75rem', color: palette.grey[500] }}
                     >
-                      {date} {time}
+                      {moment(date).format('YYYY-MM-DD')}{' '}
+                      {moment(time).format('HH:mm')}
                     </TableCell>
                     <TableCell
                       sx={{ fontSize: '0.75rem', color: palette.grey[500] }}
