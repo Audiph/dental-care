@@ -9,6 +9,7 @@ import {
   TableHead,
   TableRow,
   useTheme,
+  Box,
 } from '@mui/material';
 import { useEffect } from 'react';
 import { FormBox, PageHeader } from '../../components';
