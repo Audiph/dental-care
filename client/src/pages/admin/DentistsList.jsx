@@ -21,10 +21,6 @@ import toast from 'react-hot-toast';
 
 const DentistsList = () => {
   const { dentists } = useSelector((state) => state.dentist);
-  console.log(
-    '🚀 ~ file: DentistsList.jsx:24 ~ DentistsList ~ dentists:',
-    dentists
-  );
   const { loading } = useSelector((state) => state.alerts);
   const { palette } = useTheme();
   const dispatch = useDispatch();
