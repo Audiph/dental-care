@@ -17,7 +17,7 @@ import { FormBox, PageHeader } from '../../components';
 import { usersColumns } from '../../utils/constants';
 
 const UsersList = () => {
-  const { users, user } = useSelector((state) => state.user);
+  const { users } = useSelector((state) => state.user);
   const { palette } = useTheme();
   const dispatch = useDispatch();
 

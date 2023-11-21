@@ -1,5 +1,5 @@
 import { Box, Container, useMediaQuery, useTheme } from '@mui/material';
-import { Dentist, FormBox, PageHeader } from '../components';
+import { Dentist, PageHeader } from '../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllApprovedDentists } from '../redux/dentistSlice';

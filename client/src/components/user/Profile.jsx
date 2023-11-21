@@ -21,8 +21,7 @@ import {
   showAppointmentModal,
 } from '../../redux/appointmentSlice';
 import moment from 'moment';
-import AuthModal from '../navigation/AuthModal';
-import { hideLoading, showLoading, showModal } from '../../redux/alertsSlice';
+import { hideLoading, showLoading } from '../../redux/alertsSlice';
 import AppointmentModal from './AppointmentModal';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -30,10 +29,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const { appointments } = useSelector((state) => state.appointment);
-  console.log(
-    '🚀 ~ file: Profile.jsx:21 ~ Profile ~ appointments:',
-    appointments
-  );
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();

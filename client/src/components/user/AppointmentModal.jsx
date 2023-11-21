@@ -1,21 +1,11 @@
-import {
-  Box,
-  Button,
-  Grid,
-  Modal,
-  TextField,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Modal, Typography, useTheme } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import axios from 'axios';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../utils/constants';
-import { showLoading, hideLoading, hideModal } from '../../redux/alertsSlice';
+import { showLoading, hideLoading } from '../../redux/alertsSlice';
 import toast from 'react-hot-toast';
-import { toggleLogin } from '../../redux/userSlice';
 import { hideAppointmentModal } from '../../redux/appointmentSlice';
 import { DateField, TimeField } from '@mui/x-date-pickers';
 
@@ -25,23 +15,13 @@ const AppointmentModal = () => {
     (state) => state.appointment
   );
   const [isAvailable, setIsAvailable] = useState(false);
-  console.log(
-    '🚀 ~ file: AppointmentModal.jsx:17 ~ AppointmentModal ~ appointment:',
-    appointment
-  );
   const { palette } = useTheme();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const checkAvailability = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const dateTimeForm = Object.fromEntries(formData);
-    console.log(
-      '🚀 ~ file: AppointmentModal.jsx:40 ~ checkAvailability ~ dateTimeForm:',
-      dateTimeForm,
-      appointment.dentistInfo.userId
-    );
     try {
       dispatch(showLoading());
       const res = await axios
