@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import {
   ApplyDentist,
   BookAppointment,
+  DentistAppointments,
   Dentists,
   DentistsList,
   Error,
@@ -83,6 +84,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <DentistsList />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/dentist/appointments',
+        element: (
+          <ProtectedRoute>
+            <DentistAppointments />
           </ProtectedRoute>
         ),
       },

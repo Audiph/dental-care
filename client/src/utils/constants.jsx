@@ -74,6 +74,15 @@ export const dentistsColumns = [
   'Actions',
 ];
 
+export const appointmentRequestsColumns = [
+  'ID',
+  'Name',
+  'Phone',
+  'Created At',
+  'Status',
+  'Actions',
+];
+
 export const services = [
   {
     id: 1,

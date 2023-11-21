@@ -11,25 +11,57 @@ import {
   useTheme,
 } from '@mui/material';
 import { useEffect } from 'react';
-import PageHeader from '../common/PageHeader';
-import FormBox from '../common/FormBox';
-import { dentistsColumns } from '../../utils/constants';
+import { FormBox, PageHeader } from '../../components';
+import { getAllAppointmentRequests } from '../../redux/appointmentSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllAppointmentsByUser } from '../../redux/appointmentSlice';
+import { BASE_URL, appointmentRequestsColumns } from '../../utils/constants';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { hideLoading, showLoading } from '../../redux/alertsSlice';
 
-const Profile = () => {
+const DentistAppointments = () => {
   const { appointments } = useSelector((state) => state.appointment);
-  console.log(
-    '🚀 ~ file: Profile.jsx:21 ~ Profile ~ appointments:',
-    appointments
-  );
   const { palette } = useTheme();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAllAppointmentsByUser());
-  }, []);
+  const changeAppointmentStatus = async ({ _id }, status) => {
+    try {
+      dispatch(showLoading());
+      const res = await axios
+        .post(
+          `${BASE_URL}/api/dentist/change-appointment-status`,
+          { appointmentId: _id, status: status },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        )
+        .then((res) => res)
+        .catch((err) => err.response);
+      console.log(
+        '🚀 ~ file: DentistAppointments.jsx:42 ~ changeAppointmentStatus ~ res:',
+        res
+      );
 
+      if (!res.data.success) {
+        toast.error(res.data.message);
+        dispatch(hideLoading());
+        return;
+      }
+
+      toast.success(res.data.message);
+      dispatch(hideLoading());
+      window.location.reload();
+    } catch (error) {
+      toast.error('Error changing dentist account status');
+      dispatch(hideLoading());
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getAllAppointmentRequests());
+  }, []);
   return (
     <Container sx={{ position: 'absolute', minWidth: '100%' }}>
       <PageHeader
@@ -46,7 +78,7 @@ const Profile = () => {
                   bgcolor: palette.background.light,
                 }}
               >
-                {dentistsColumns.map((title) => {
+                {appointmentRequestsColumns.map((title) => {
                   return (
                     <TableCell
                       sx={{ fontSize: '1rem', color: palette.grey[100] }}
@@ -60,9 +92,8 @@ const Profile = () => {
             </TableHead>
             <TableBody>
               {appointments.map((item, index) => {
-                const { date, time, status } = item;
-                const { id, firstName, lastName, phoneNumber } =
-                  item.dentistInfo;
+                const { date, time, status, userId, dentistInfo, userInfo } =
+                  item;
                 return (
                   <TableRow
                     key={index}
@@ -76,17 +107,17 @@ const Profile = () => {
                       scope="row"
                       sx={{ fontSize: '0.75rem', color: palette.grey[500] }}
                     >
-                      {id}
+                      {userId}
                     </TableCell>
                     <TableCell
                       sx={{ fontSize: '0.75rem', color: palette.grey[500] }}
                     >
-                      {firstName} {lastName}
+                      {userInfo.name}
                     </TableCell>
                     <TableCell
                       sx={{ fontSize: '0.75rem', color: palette.grey[500] }}
                     >
-                      {phoneNumber}
+                      {dentistInfo.phoneNumber}
                     </TableCell>
                     <TableCell
                       sx={{ fontSize: '0.75rem', color: palette.grey[500] }}
@@ -98,6 +129,7 @@ const Profile = () => {
                     >
                       {status}
                     </TableCell>
+
                     <TableCell
                       sx={{
                         fontSize: '0.75rem',
@@ -107,12 +139,34 @@ const Profile = () => {
                         rowGap: '1rem',
                       }}
                     >
-                      <Button variant="outlined" color="secondary">
-                        CHANGE
-                      </Button>
-                      <Button variant="contained" color="error">
-                        CANCEL
-                      </Button>
+                      {status === 'pending' && (
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            rowGap: '1rem',
+                          }}
+                        >
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            onClick={() =>
+                              changeAppointmentStatus(item, 'approved')
+                            }
+                          >
+                            Approve
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() =>
+                              changeAppointmentStatus(item, 'rejected')
+                            }
+                          >
+                            Reject
+                          </Button>
+                        </Box>
+                      )}
                     </TableCell>
                   </TableRow>
                 );
@@ -125,4 +179,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default DentistAppointments;
