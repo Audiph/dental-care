@@ -29,7 +29,6 @@ const Dentist = ({
       </Card>
       <Card
         p="1rem"
-        onClick={() => console.log(firstName)}
         sx={{
           bgcolor: 'inherit',
           margin: '1rem',
