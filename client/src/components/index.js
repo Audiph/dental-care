@@ -5,6 +5,8 @@ export { default as AuthModal } from './navigation/AuthModal';
 export { default as ProductHero } from './landing/ProductHero';
 export { default as Services } from './landing/Services';
 
+export { default as Profile } from './dentist/Profile';
+
 export { default as FlexBetween } from './common/FlexBetween';
 export { default as Title } from './common/Title';
 export { default as FormBox } from './common/FormBox';

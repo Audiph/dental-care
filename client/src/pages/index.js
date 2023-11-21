@@ -8,4 +8,3 @@ export { default as BookAppointment } from './BookAppointment';
 export { default as Error } from './common/Error';
 export { default as DentistsList } from './admin/DentistsList';
 export { default as UsersList } from './admin/UsersList';
-export { default as Profile } from './dentist/Profile';

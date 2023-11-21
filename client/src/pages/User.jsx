@@ -1,8 +1,7 @@
 import { Container, useTheme } from '@mui/material';
-import { PageHeader } from '../components';
+import { PageHeader, Profile } from '../components';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Profile from './dentist/Profile';
 import UsersList from './admin/UsersList';
 
 const User = () => {

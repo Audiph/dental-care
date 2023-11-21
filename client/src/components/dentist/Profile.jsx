@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { DentistForm, PageHeader } from '../../components';
+import { DentistForm, PageHeader } from '..';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Container, useTheme } from '@mui/material';
 import { useEffect } from 'react';
