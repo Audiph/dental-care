@@ -13,10 +13,20 @@ import {
 import { useEffect } from 'react';
 import PageHeader from '../common/PageHeader';
 import FormBox from '../common/FormBox';
-import { dentistsColumns } from '../../utils/constants';
+import { BASE_URL, dentistsColumns } from '../../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllAppointmentsByUser } from '../../redux/appointmentSlice';
+import {
+  getAllAppointmentsByUser,
+  getDentistDataById,
+  showAppointmentModal,
+} from '../../redux/appointmentSlice';
 import moment from 'moment';
+import AuthModal from '../navigation/AuthModal';
+import { hideLoading, showLoading, showModal } from '../../redux/alertsSlice';
+import AppointmentModal from './AppointmentModal';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const { appointments } = useSelector((state) => state.appointment);
@@ -26,10 +36,45 @@ const Profile = () => {
   );
   const { palette } = useTheme();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getAllAppointmentsByUser());
   }, []);
+
+  const removeAppointment = async (appointmentId, userInfo, dentistId) => {
+    try {
+      dispatch(showLoading());
+      const res = await axios
+        .post(
+          `${BASE_URL}/api/user/remove-book-appointment`,
+          {
+            appointmentId,
+            dentistId,
+            userInfo,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        )
+        .then((res) => res)
+        .catch((err) => err.response);
+
+      if (!res.data.success) {
+        toast.error(res.data.message);
+        dispatch(hideLoading());
+        return;
+      }
+      dispatch(hideLoading());
+      toast.success(res.data.message);
+      navigate('/dentists');
+    } catch (error) {
+      toast.error('Error booking appointment');
+      dispatch(hideLoading());
+    }
+  };
 
   return (
     <Container sx={{ position: 'absolute', minWidth: '100%' }}>
@@ -61,8 +106,8 @@ const Profile = () => {
             </TableHead>
             <TableBody>
               {appointments.map((item, index) => {
-                const { date, time, status } = item;
-                const { id, firstName, lastName, phoneNumber } =
+                const { _id, date, time, status, userInfo } = item;
+                const { id, userId, firstName, lastName, phoneNumber } =
                   item.dentistInfo;
                 return (
                   <TableRow
@@ -109,11 +154,22 @@ const Profile = () => {
                         rowGap: '1rem',
                       }}
                     >
-                      <Button variant="outlined" color="secondary">
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {
+                          dispatch(getDentistDataById(_id));
+                          dispatch(showAppointmentModal());
+                        }}
+                      >
                         CHANGE
                       </Button>
-                      <Button variant="contained" color="error">
-                        CANCEL
+                      <Button
+                        variant="contained"
+                        color="error"
+                        onClick={() => removeAppointment(_id, userInfo, userId)}
+                      >
+                        {status !== 'rejected' ? 'CANCEL' : 'REMOVE'}
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -123,6 +179,7 @@ const Profile = () => {
           </Table>
         </TableContainer>
       </FormBox>
+      <AppointmentModal />
     </Container>
   );
 };

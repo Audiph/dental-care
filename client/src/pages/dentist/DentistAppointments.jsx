@@ -19,6 +19,7 @@ import { BASE_URL, appointmentRequestsColumns } from '../../utils/constants';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { hideLoading, showLoading } from '../../redux/alertsSlice';
+import moment from 'moment';
 
 const DentistAppointments = () => {
   const { appointments } = useSelector((state) => state.appointment);

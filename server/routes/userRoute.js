@@ -388,24 +388,24 @@ router.post('/update-book-appointment', authMiddleware, async (req, res) => {
 
 router.post('/remove-book-appointment', authMiddleware, async (req, res) => {
   try {
-    const { appointmentId } = req.body;
+    const { appointmentId, dentistId, userInfo } = req.body;
     await Appointment.findByIdAndDelete(appointmentId);
 
-    const user = await User.findOne({ _id: req.body.dentistInfo.userId });
+    const user = await User.findOne({ _id: dentistId });
     user.unseenNotifications.push({
       type: 'appointment-cancelled',
-      message: `${req.body.userInfo.name} has cancelled/removed the appointment`,
+      message: `${userInfo.name} has cancelled/removed the appointment`,
       onClickPath: '/dentist/appointments',
     });
     await user.save();
     res.status(200).send({
-      message: 'Appointment updated successfully',
+      message: 'Appointment cancelled successfully',
       success: true,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      message: 'Error updating appointment status',
+      message: 'Error cancelling appointment status',
       success: false,
       error,
     });

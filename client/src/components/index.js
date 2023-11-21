@@ -6,6 +6,7 @@ export { default as ProductHero } from './landing/ProductHero';
 export { default as Services } from './landing/Services';
 
 export { default as UserProfile } from './user/Profile';
+export { default as AppointmentModal } from './user/AppointmentModal';
 export { default as DentistProfile } from './dentist/Profile';
 
 export { default as FlexBetween } from './common/FlexBetween';
