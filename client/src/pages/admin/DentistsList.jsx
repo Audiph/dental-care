@@ -30,7 +30,7 @@ const DentistsList = () => {
       dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/admin/change-dentist-account-status`,
+          `/api/admin/change-dentist-account-status`,
           {
             dentistId: _id,
             userId,

@@ -42,7 +42,7 @@ const Profile = () => {
       dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/user/remove-book-appointment`,
+          `/api/user/remove-book-appointment`,
           {
             appointmentId,
             dentistId,

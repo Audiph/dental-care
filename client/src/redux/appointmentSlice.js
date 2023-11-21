@@ -9,7 +9,7 @@ export const getAllAppointmentsByUser = createAsyncThunk(
     try {
       thunkAPI.dispatch(showLoading());
       const res = await axios
-        .get(`${BASE_URL}/api/user/get-appointments-by-user-id`, {
+        .get(`/api/user/get-appointments-by-user-id`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -37,7 +37,7 @@ export const getAllAppointmentRequests = createAsyncThunk(
     try {
       thunkAPI.dispatch(showLoading());
       const res = await axios
-        .get(`${BASE_URL}/api/dentist/get-appointments-by-dentist-id`, {
+        .get(`/api/dentist/get-appointments-by-dentist-id`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -66,7 +66,7 @@ export const getDentistDataById = createAsyncThunk(
       thunkAPI.dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/user/get-appointment-info-by-id`,
+          `/api/user/get-appointment-info-by-id`,
           {
             appointmentId,
           },

@@ -9,7 +9,7 @@ export const getAllUsers = createAsyncThunk(
     try {
       thunkAPI.dispatch(showLoading());
       const res = await axios
-        .get(`${BASE_URL}/api/admin/get-all-users`, {
+        .get(`/api/admin/get-all-users`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },

@@ -27,7 +27,7 @@ const Profile = () => {
       dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/dentist/update-dentist-profile`,
+          `/api/dentist/update-dentist-profile`,
           {
             ...updateDentist,
             userId: user.id,
