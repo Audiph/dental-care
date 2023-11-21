@@ -24,7 +24,7 @@ const ApplyDentist = () => {
       dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/user/apply-dentist-account`,
+          `/api/user/apply-dentist-account`,
           {
             ...newDentist,
             userId: user.id,

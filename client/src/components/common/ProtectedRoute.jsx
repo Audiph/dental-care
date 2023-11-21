@@ -16,7 +16,7 @@ const ProtectedRoute = (props) => {
       dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/user/get-user-info-by-id`,
+          `/api/user/get-user-info-by-id`,
           { token: localStorage.getItem('token') },
           {
             headers: {

@@ -28,7 +28,7 @@ const Notifications = () => {
       dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/user/delete-all-notifications`,
+          `/api/user/delete-all-notifications`,
           {
             userId: user.id,
           },

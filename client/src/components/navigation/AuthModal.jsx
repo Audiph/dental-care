@@ -24,7 +24,7 @@ const AuthModal = () => {
 
       if (login) {
         const res = await axios
-          .post(`${BASE_URL}/api/user/login`, user)
+          .post(`/api/user/login`, user)
           .then((res) => res)
           .catch((err) => err.response);
 
@@ -43,7 +43,7 @@ const AuthModal = () => {
         return;
       }
       const res = await axios
-        .post(`${BASE_URL}/api/user/register`, user)
+        .post(`/api/user/register`, user)
         .then((res) => res)
         .catch((err) => err.response);
 

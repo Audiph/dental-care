@@ -40,7 +40,7 @@ const Navbar = () => {
       dispatch(showLoading());
       const res = await axios
         .post(
-          `${BASE_URL}/api/user/mark-all-notifications-as-seen`,
+          `/api/user/mark-all-notifications-as-seen`,
           {
             userId: user.id,
           },
